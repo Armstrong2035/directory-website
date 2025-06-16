@@ -1,0 +1,198 @@
+import React, { useState } from "react";
+import {
+  Modal,
+  Box,
+  Typography,
+  TextField,
+  MenuItem,
+  Button,
+} from "@mui/material";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 2,
+};
+
+const initialState = {
+  sellerName: "",
+  title: "",
+  description: "",
+  projectName: "",
+  listingType: "",
+  address: "",
+  propertyType: "",
+  price: "",
+  email: "",
+  phone: "",
+};
+
+const validate = (form) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^\+\d{10,15}$/;
+
+  return (
+    form.sellerName &&
+    form.title &&
+    form.description &&
+    form.projectName &&
+    form.listingType &&
+    form.address &&
+    form.propertyType &&
+    form.price &&
+    emailRegex.test(form.email) &&
+    phoneRegex.test(form.phone)
+  );
+};
+
+const ListingModal = ({ open, onClose, onSubmit }) => {
+  const [formData, setFormData] = useState(initialState);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    if (!validate(formData)) {
+      alert(
+        "Please fill all fields correctly. Phone must include country code."
+      );
+      return;
+    }
+    onSubmit(formData);
+    setFormData(initialState);
+  };
+
+  return (
+    <Modal open={open} onClose={onClose}>
+      <Box sx={style}>
+        <Typography variant="h6" gutterBottom>
+          Add New Listing
+        </Typography>
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="sellerName"
+          label="Seller Name"
+          helperText="This name is for your reference only and won’t be visible to others."
+          value={formData.sellerName}
+          onChange={handleChange}
+        />
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="title"
+          label="Listing Title"
+          value={formData.title}
+          onChange={handleChange}
+        />
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="description"
+          label="Description"
+          placeholder="Enter property description"
+          inputProps={{ maxLength: 500 }}
+          multiline
+          rows={3}
+          value={formData.description}
+          onChange={handleChange}
+          helperText={`${formData.description.length}/500`}
+        />
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="projectName"
+          label="Project Name"
+          placeholder="(Building, Villa, Community, etc.)"
+          value={formData.projectName}
+          onChange={handleChange}
+        />
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="listingType"
+          label="Listing Type"
+          select
+          value={formData.listingType}
+          onChange={handleChange}
+        >
+          <MenuItem value="rent">Rent</MenuItem>
+          <MenuItem value="sale">Sale</MenuItem>
+        </TextField>
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="address"
+          label="Select your address"
+          placeholder="Search for a location in UAE"
+          value={formData.address}
+          onChange={handleChange}
+        />
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="propertyType"
+          label="Property Type"
+          select
+          value={formData.propertyType}
+          onChange={handleChange}
+        >
+          <MenuItem value="apartment">Apartment</MenuItem>
+          <MenuItem value="villa">Villa</MenuItem>
+          <MenuItem value="office">Office</MenuItem>
+        </TextField>
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="price"
+          label="Price"
+          type="number"
+          value={formData.price}
+          onChange={handleChange}
+        />
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="email"
+          label="Email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+        />
+
+        <TextField
+          fullWidth
+          margin="normal"
+          name="phone"
+          label="Phone (include country code, e.g., +971...)"
+          value={formData.phone}
+          onChange={handleChange}
+        />
+
+        <Box sx={{ mt: 2, textAlign: "right" }}>
+          <Button variant="contained" onClick={handleSubmit}>
+            Submit
+          </Button>
+        </Box>
+      </Box>
+    </Modal>
+  );
+};
+
+export default ListingModal;
