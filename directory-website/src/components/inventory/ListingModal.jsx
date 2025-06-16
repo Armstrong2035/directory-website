@@ -18,6 +18,8 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: 2,
+  overflowY: "auto",
+  maxHeight: "90vh",
 };
 
 const initialState = {

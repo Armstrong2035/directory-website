@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import InventoryGrid from "@/components/inventory/InventoryGrid";
 import ListingModal from "@/components/inventory/ListingModal";
+import DashboardLayout from "../dashboard/page";
 const Inventory = () => {
   const [open, setOpen] = useState(false);
   const [listings, setListings] = useState([]);
@@ -16,14 +17,16 @@ const Inventory = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <InventoryGrid listings={listings} onAddClick={handleOpen} />
-      <ListingModal
-        open={open}
-        onClose={handleClose}
-        onSubmit={handleAddListing}
-      />
-    </Box>
+    <DashboardLayout>
+      <Box sx={{ p: 3 }}>
+        <InventoryGrid listings={listings} onAddClick={handleOpen} />
+        <ListingModal
+          open={open}
+          onClose={handleClose}
+          onSubmit={handleAddListing}
+        />
+      </Box>
+    </DashboardLayout>
   );
 };
 

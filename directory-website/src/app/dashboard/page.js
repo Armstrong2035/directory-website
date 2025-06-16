@@ -11,6 +11,7 @@ import {
   Typography,
   CssBaseline,
 } from "@mui/material";
+import Link from "next/link";
 
 const drawerWidth = 240;
 
@@ -49,9 +50,15 @@ export default function DashboardLayout({ children }) {
         <Box sx={{ overflow: "auto" }}>
           <List>
             {navItems.map((text) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
+              <Link
+                href={`/${text.toLowerCase()}`}
+                key={text}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <ListItem button>
+                  <ListItemText primary={text} />
+                </ListItem>
+              </Link>
             ))}
           </List>
         </Box>
