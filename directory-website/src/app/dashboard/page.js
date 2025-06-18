@@ -10,14 +10,36 @@ import {
   AppBar,
   Typography,
   CssBaseline,
+  CircularProgress,
 } from "@mui/material";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import AuthButtons from "../../components/auth/AuthButtons";
+import { useAuth } from "../../contexts/AuthContext";
 
 const drawerWidth = 240;
 
 const navItems = ["Home", "Inventory", "Leads", "Offers", "Profile"];
 
 export default function DashboardLayout({ children }) {
+  const auth = useAuth();
+  const router = useRouter();
+
+  // Show loading spinner while auth is loading
+  if (auth.loading) {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  // Redirect to login if user is not authenticated
+  if (!auth.user) {
+    router.push('/signin');
+    return null;
+  }
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -27,10 +49,11 @@ export default function DashboardLayout({ children }) {
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6" noWrap component="div">
             My Dashboard
           </Typography>
+          <AuthButtons />
         </Toolbar>
       </AppBar>
 
@@ -67,7 +90,16 @@ export default function DashboardLayout({ children }) {
       {/* Main Content Area */}
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <Toolbar />
-        {children || <Typography>Welcome to the Dashboard!</Typography>}
+        {children || (
+          <Box>
+            <Typography variant="h4" gutterBottom>
+              Welcome to the Dashboard!
+            </Typography>
+            <Typography variant="body1">
+              Hello, {auth.user.displayName || auth.user.email}!
+            </Typography>
+          </Box>
+        )}
       </Box>
     </Box>
   );
