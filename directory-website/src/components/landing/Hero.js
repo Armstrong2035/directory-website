@@ -3,7 +3,7 @@
 import { Box, Typography, Button, Grid, Paper, Container } from "@mui/material";
 import { typography } from "@/styles/typography";
 
-const gradientBrandStyles = {
+export const gradientBrandStyles = {
   background: "linear-gradient(90deg, #4f8cff 20%, #ffb86b 80%)",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",

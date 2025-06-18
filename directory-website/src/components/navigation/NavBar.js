@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const gradientBrandStyles = {
   background: "linear-gradient(90deg, #4f8cff 20%, #ffb86b 80%)",
@@ -23,10 +25,11 @@ const gradientBrandStyles = {
   fontWeight: 900,
 };
 
-export default function NavBar() {
+export default function ResponsiveAppBar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const router = useRouter();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -37,14 +40,12 @@ export default function NavBar() {
   };
 
   const handleSignIn = () => {
-    // Add sign in logic here
-    console.log("Sign In clicked");
+    router.push("/auth/signin");
     handleMenuClose();
   };
 
   const handleSignUp = () => {
-    // Add sign up logic here
-    console.log("Sign Up clicked");
+    router.push("/auth/signup");
     handleMenuClose();
   };
 
@@ -52,25 +53,28 @@ export default function NavBar() {
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "transparent",
+        backgroundColor: "rgba(25, 33, 43, 0.8)",
         boxShadow: "none",
         borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
         backdropFilter: "blur(10px)",
+        zIndex: 1000,
       }}
     >
       <Toolbar sx={{ justifyContent: "space-between", px: { xs: 2, md: 4 } }}>
         {/* Logo */}
-        <Typography
-          variant="h5"
-          component="div"
-          sx={{
-            ...gradientBrandStyles,
-            fontSize: { xs: "1.5rem", md: "1.75rem" },
-            fontWeight: 900,
-          }}
-        >
-          Subarashi Scout
-        </Typography>
+        <Link href={"/"} style={{ textDecoration: "none" }}>
+          <Typography
+            variant="h5"
+            component="div"
+            sx={{
+              ...gradientBrandStyles,
+              fontSize: { xs: "1.5rem", md: "1.75rem" },
+              fontWeight: 900,
+            }}
+          >
+            Subarashi Scout
+          </Typography>
+        </Link>
 
         {/* Desktop Navigation */}
         {!isMobile ? (

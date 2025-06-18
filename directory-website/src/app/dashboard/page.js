@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   Drawer,
@@ -25,18 +25,31 @@ export default function DashboardLayout({ children }) {
   const auth = useAuth();
   const router = useRouter();
 
+  // Handle authentication redirect in useEffect to avoid render issues
+  useEffect(() => {
+    if (!auth.loading && !auth.user) {
+      router.push("/signin");
+    }
+  }, [auth.loading, auth.user, router]);
+
   // Show loading spinner while auth is loading
   if (auth.loading) {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
         <CircularProgress />
       </Box>
     );
   }
 
-  // Redirect to login if user is not authenticated
+  // Return null while redirect is happening
   if (!auth.user) {
-    router.push('/signin');
     return null;
   }
 
