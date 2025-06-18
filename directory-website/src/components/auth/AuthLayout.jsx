@@ -11,7 +11,7 @@ const AuthLayout = ({ children, title, subtitle }) => {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        background: "linear-gradient(135deg, #005244 0%, #22ab72 100%)",
         display: "flex",
         alignItems: "center",
         py: 3,
@@ -37,7 +37,7 @@ const AuthLayout = ({ children, title, subtitle }) => {
                 width: 64,
                 height: 64,
                 borderRadius: "50%",
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                background: "linear-gradient(135deg, #005244 0%, #22ab72 100%)",
                 mb: 2,
               }}
             >
@@ -49,13 +49,13 @@ const AuthLayout = ({ children, title, subtitle }) => {
               gutterBottom
               sx={{
                 fontWeight: 700,
-                background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+                background: "linear-gradient(135deg, #005244 0%, #22ab72 100%)",
                 backgroundClip: "text",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
               }}
             >
-              PropertyHub
+             Subarashi
             </Typography>
             <Typography variant="h5" component="h2" gutterBottom sx={{ fontWeight: 600 }}>
               {title}

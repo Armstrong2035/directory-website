@@ -12,6 +12,7 @@ import {
   CssBaseline,
 } from "@mui/material";
 import Link from "next/link";
+import AuthButtons from "../../components/auth/AuthButtons";
 
 const drawerWidth = 240;
 
@@ -27,10 +28,11 @@ export default function DashboardLayout({ children }) {
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
-        <Toolbar>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
           <Typography variant="h6" noWrap component="div">
             My Dashboard
           </Typography>
+          <AuthButtons />
         </Toolbar>
       </AppBar>
 

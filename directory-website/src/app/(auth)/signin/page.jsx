@@ -126,9 +126,9 @@ export default function SignIn() {
           sx={{
             py: 1.5,
             mb: 2,
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            background: "linear-gradient(135deg, #005244 0%, #22ab72  100%)",
             "&:hover": {
-              background: "linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)",
+              background: "linear-gradient(135deg, #22ab72 0%, #005244 100%)",
             },
           }}
         >

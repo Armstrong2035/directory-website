@@ -5,10 +5,13 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { TextField, Box, Typography, Divider, Alert, InputAdornment, IconButton } from "@mui/material"
 import { Person, Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material"
-import GoogleSignInButton from "../../components/GoogleSignInButton"
-import LoadingButton from "../../components/LoadingButton"
-import { signUpWithEmail, signInWithGoogle } from "../../lib/auth"
+
+//import { signUpWithEmail, signInWithGoogle } from "../../lib/auth"
 import AuthLayout from "../../../components/auth/AuthLayout"
+import LoadingButton from "../../../components/auth/LoadingButton"
+import GoogleSignInButton from "../../../components/auth/GoogleSignInButton"
+import { auth } from "../../../firebase/client"
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -67,13 +70,16 @@ export default function SignUp() {
     setGoogleLoading(true)
     setError("")
 
-    const { user, error: authError } = await signInWithGoogle()
+    const provider = new GoogleAuthProvider();
+   await signInWithPopup(auth, provider)
+
+   /*  const { user, error: authError } = await signInWithGoogle()
 
     if (authError) {
       setError(authError)
     } else {
       router.push("/dashboard")
-    }
+    } */
 
     setGoogleLoading(false)
   }
@@ -180,9 +186,9 @@ export default function SignUp() {
           sx={{
             py: 1.5,
             mb: 2,
-            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            background: "linear-gradient(135deg, #005244 0%, #22ab72 100%)",
             "&:hover": {
-              background: "linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%)",
+              background: "linear-gradient(135deg, #22ab72 0%, #005244 100%)",
             },
           }}
         >
