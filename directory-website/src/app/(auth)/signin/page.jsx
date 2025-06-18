@@ -5,12 +5,10 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { TextField, Box, Typography, Divider, Alert, InputAdornment, IconButton } from "@mui/material"
 import { Email, Lock, Visibility, VisibilityOff } from "@mui/icons-material"
-//import { signInWithEmail, signInWithGoogle } from "../../lib/auth"
 import AuthLayout from "../../../components/auth/AuthLayout"
 import LoadingButton from "../../../components/auth/LoadingButton"
 import GoogleSignInButton from "../../../components/auth/GoogleSignInButton"
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth"
-import { auth } from "../../../firebase/client"
+import { useAuth } from "../../../contexts/AuthContext"
 
 export default function SignIn() {
   const [formData, setFormData] = useState({
@@ -22,6 +20,7 @@ export default function SignIn() {
   const [googleLoading, setGoogleLoading] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
+  const auth = useAuth()
 
   const handleChange = (e) => {
     setFormData({
@@ -36,14 +35,13 @@ export default function SignIn() {
     setLoading(true)
     setError("")
 
-  /*   const { user, error: authError } = await signInWithEmail(formData.email, formData.password)
+    const { user, error: authError } = await auth.signInWithEmail(formData.email, formData.password)
 
     if (authError) {
       setError(authError)
-    } else {
-      router.push("/dashboard")
     }
- */
+    // No need to manually redirect - AuthContext handles it automatically
+
     setLoading(false)
   }
 
@@ -51,18 +49,13 @@ export default function SignIn() {
     setGoogleLoading(true)
     setError("")
 
-
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-
-/*       const { user, error: authError } = await signInWithGoogle()
+    const { user, error: authError } = await auth.signInWithGoogle()
 
     if (authError) {
       setError(authError)
-    } else {
-      router.push("/dashboard")
-    } */
- 
+    }
+    // No need to manually redirect - AuthContext handles it automatically
+
     setGoogleLoading(false)
   }
 

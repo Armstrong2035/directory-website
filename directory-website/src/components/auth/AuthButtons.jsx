@@ -1,6 +1,5 @@
 "use client";
 
-
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -37,7 +36,7 @@ export default function AuthButtons() {
     handleClose();
   };
 
-  console.log("Auth", auth)
+  console.log("Auth Phoy", auth.user.photoURL)
 
   return (
     <div>
@@ -52,16 +51,16 @@ export default function AuthButtons() {
             aria-expanded={open ? 'true' : undefined}
           >
             <Avatar>
-              {!!auth.currentUser.photoURL && (
+              {!!auth.user.photoURL && (
                 <Image
-                  src={auth.currentUser.photoURL}
-                  alt={`${auth.currentUser.displayName} avatar`}
+                  src={auth.user.photoURL}
+                  alt={`${auth.user.displayName} avatar`}
                   width={70}
                   height={70}
                 />
               )}
               <Typography variant="body2" sx={{ color: 'primary.dark' }}>
-                {(auth.currentUser.displayName || auth.currentUser.email)?.[0]}
+                {(auth.user.displayName || auth.user.email)?.[0]}
               </Typography>
             </Avatar>
           </IconButton>
@@ -103,10 +102,10 @@ export default function AuthButtons() {
             <MenuItem>
               <Box>
                 <Typography variant="body2" sx={{ fontWeight: 'medium' }}>
-                  {auth.currentUser.displayName}
+                  {auth.user.displayName}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  {auth.currentUser.email}
+                  {auth.user.email}
                 </Typography>
               </Box>
             </MenuItem>
@@ -120,7 +119,7 @@ export default function AuthButtons() {
           </Menu>
         </>
       )}
-      {!auth?.currentUser && (
+      {!auth?.user && (
         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
           <Link
             href="/signin"
