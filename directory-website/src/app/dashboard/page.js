@@ -13,20 +13,31 @@ import {
 } from "@mui/material";
 import InventoryGrid from "@/components/inventory/InventoryGrid";
 import ListingModal from "@/components/inventory/ListingModal";
+import { createListing } from "../../lib/listings";
+import { useAuth } from "../../contexts/AuthContext";
 
 const DashboardWithTabs = () => {
   const theme = useTheme();
   const [tabIndex, setTabIndex] = useState(0);
   const [listings, setListings] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleTabChange = (event, newValue) => setTabIndex(newValue);
 
   // Inventory Handlers
   const handleOpen = () => setModalOpen(true);
   const handleClose = () => setModalOpen(false);
-  const handleAddListing = (newListing) => {
-    setListings((prev) => [...prev, newListing]);
+  const auth = useAuth()
+  const user = auth.user
+
+  const handleAddListing = async (newListing) => {
+    setIsLoading(true)
+    const { id, error: createError } = await createListing(newListing, user.uid, user)
+    alert(
+      "Listing created successfully"
+    );
+    setIsLoading(false)
     handleClose();
   };
 

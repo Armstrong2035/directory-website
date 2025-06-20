@@ -1,5 +1,5 @@
 import { collection, addDoc, getDocs, query, orderBy, where, doc, getDoc } from "firebase/firestore"
-import { db } from "./firebase"
+import { db } from "../firebase/client"
 
 export const createListing = async (listingData, userId, userInfo) => {
   try {

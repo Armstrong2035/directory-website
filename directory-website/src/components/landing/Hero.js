@@ -4,7 +4,7 @@ import { Box, Typography, Button } from "@mui/material";
 import { typography } from "@/styles/typography";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { useRouter } from "next/navigation";
+
 
 export const gradientBrandStyles = {
   background: "linear-gradient(90deg, #4f8cff 20%, #ffb86b 80%)",

@@ -65,6 +65,7 @@ const ListingModal = ({ open, onClose, onSubmit }) => {
       );
       return;
     }
+
     onSubmit(formData);
     setFormData(initialState);
   };
