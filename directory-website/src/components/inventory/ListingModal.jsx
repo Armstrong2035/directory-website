@@ -1,12 +1,7 @@
+// components/ListingModal.js
 import React, { useState } from "react";
-import {
-  Modal,
-  Box,
-  Typography,
-  TextField,
-  MenuItem,
-  Button,
-} from "@mui/material";
+import { Modal, Box, Typography, TextField, Button } from "@mui/material";
+import ListingForm from "../ListingForm";
 
 const style = {
   position: "absolute",
@@ -33,6 +28,9 @@ const initialState = {
   price: "",
   email: "",
   phone: "",
+  bedrooms: "",
+  bathrooms: "",
+  squareFeet: "",
 };
 
 const validate = (form) => {
@@ -124,39 +122,12 @@ const ListingModal = ({ open, onClose, onSubmit }) => {
         <TextField
           fullWidth
           margin="normal"
-          name="listingType"
-          label="Listing Type"
-          select
-          value={formData.listingType}
-          onChange={handleChange}
-        >
-          <MenuItem value="rent">Rent</MenuItem>
-          <MenuItem value="sale">Sale</MenuItem>
-        </TextField>
-
-        <TextField
-          fullWidth
-          margin="normal"
           name="address"
           label="Select your address"
           placeholder="Search for a location in UAE"
           value={formData.address}
           onChange={handleChange}
         />
-
-        <TextField
-          fullWidth
-          margin="normal"
-          name="propertyType"
-          label="Property Type"
-          select
-          value={formData.propertyType}
-          onChange={handleChange}
-        >
-          <MenuItem value="apartment">Apartment</MenuItem>
-          <MenuItem value="villa">Villa</MenuItem>
-          <MenuItem value="office">Office</MenuItem>
-        </TextField>
 
         <TextField
           fullWidth
@@ -186,6 +157,11 @@ const ListingModal = ({ open, onClose, onSubmit }) => {
           value={formData.phone}
           onChange={handleChange}
         />
+
+        {/* Modular listing form segment */}
+        <Box mt={3}>
+          <ListingForm formData={formData} setFormData={setFormData} />
+        </Box>
 
         <Box sx={{ mt: 2, textAlign: "right" }}>
           <Button variant="contained" onClick={handleSubmit}>

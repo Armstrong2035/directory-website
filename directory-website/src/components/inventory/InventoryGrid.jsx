@@ -3,15 +3,15 @@ import {
   Grid,
   Card,
   CardContent,
-  CardActions,
   Typography,
   IconButton,
   Box,
   Stack,
   Chip,
   Button,
-  Divider,
   Avatar,
+  Container,
+  Fab,
 } from "@mui/material";
 import {
   Add as AddIcon,
@@ -25,7 +25,7 @@ import {
 } from "@mui/icons-material";
 
 const InventoryGrid = ({ listings = [], onAddClick }) => {
-  // Mock data for demonstration
+  // Fallback mock data
   const mockListings = [
     {
       id: 1,
@@ -38,7 +38,6 @@ const InventoryGrid = ({ listings = [], onAddClick }) => {
       propertyType: "Apartment",
       listingType: "Sale",
       sellerName: "Ahmed Al-Mansouri",
-      phone: "+971 50 123 4567",
     },
     {
       id: 2,
@@ -51,7 +50,6 @@ const InventoryGrid = ({ listings = [], onAddClick }) => {
       propertyType: "Villa",
       listingType: "Rent",
       sellerName: "Sarah Johnson",
-      phone: "+971 55 987 6543",
     },
     {
       id: 3,
@@ -64,7 +62,6 @@ const InventoryGrid = ({ listings = [], onAddClick }) => {
       propertyType: "Office",
       listingType: "Rent",
       sellerName: "Mohammad Hassan",
-      phone: "+971 52 456 7890",
     },
   ];
 
@@ -88,218 +85,198 @@ const InventoryGrid = ({ listings = [], onAddClick }) => {
   };
 
   return (
-    <Stack spacing={3}>
-      <Box
+    <Box>
+      <Stack spacing={3} justifyContent={"center"} alignItems={"center"}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Typography variant="h4" fontWeight="bold" color="primary">
+            My Inventory
+          </Typography>
+          {/* <Typography variant="body2" color="text.secondary">
+            {displayListings.length} listing
+            {displayListings.length !== 1 ? "s" : ""}
+          </Typography> */}
+        </Box>
+
+        <Container>
+          <Grid
+            container
+            spacing={2}
+            justifyContent={"flex-start"}
+            sx={{ width: "100%" }}
+          >
+            {displayListings.map((listing) => (
+              <Grid item size={{ xs: 12, md: 6 }} key={listing.id}>
+                <Card
+                  sx={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+
+                    transition: "transform 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-4px)",
+                      boxShadow: 6,
+                    },
+                  }}
+                >
+                  <CardContent>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: 1,
+                      }}
+                    >
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                      >
+                        {getPropertyIcon(listing.propertyType)}
+                        <Typography variant="caption" color="text.secondary">
+                          {listing.propertyType}
+                        </Typography>
+                      </Box>
+                      <Chip
+                        label={listing.listingType}
+                        size="small"
+                        color={getListingTypeColor(listing.listingType)}
+                        variant="outlined"
+                      />
+                    </Box>
+
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography
+                        variant="subtitle1"
+                        fontWeight="bold"
+                        sx={{
+                          mb: 1,
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 2,
+                          WebkitBoxOrient: "vertical",
+                        }}
+                      >
+                        {listing.title}
+                      </Typography>
+
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 0.5,
+                          mb: 1,
+                        }}
+                      >
+                        <LocationIcon fontSize="small" color="action" />
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          noWrap
+                          sx={{
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                          }}
+                          title={listing.address}
+                        >
+                          {listing.address}
+                        </Typography>
+                      </Box>
+
+                      <Typography
+                        variant="body2"
+                        color="text.secondary"
+                        fontStyle="italic"
+                        sx={{ mb: 1 }}
+                      >
+                        {listing.projectName}
+                      </Typography>
+
+                      <Typography
+                        variant="h6"
+                        color="primary"
+                        fontWeight="bold"
+                      >
+                        {listing.price}
+                      </Typography>
+
+                      <Typography variant="caption" color="text.secondary">
+                        Listed by {listing.sellerName}
+                      </Typography>
+                    </Box>
+
+                    <Box
+                      sx={{
+                        mt: 2,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Button
+                        size="small"
+                        startIcon={<ViewIcon />}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          console.log("View listing:", listing.id);
+                        }}
+                      >
+                        View
+                      </Button>
+                      <Box>
+                        <IconButton
+                          size="small"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log("Edit listing:", listing.id);
+                          }}
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            console.log("Delete listing:", listing.id);
+                          }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        </Container>
+      </Stack>
+
+      {/* Floating Action Button */}
+      <Fab
+        color="primary"
+        aria-label="add"
+        onClick={onAddClick}
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          position: "fixed",
+          bottom: 32,
+          right: 32,
+          zIndex: 1000,
         }}
       >
-        <Typography variant="h4" fontWeight="bold" color="primary">
-          My Inventory
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {displayListings.length} listing
-          {displayListings.length !== 1 ? "s" : ""}
-        </Typography>
-      </Box>
-
-      <Grid container spacing={3}>
-        {/* Add New Listing Card */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card
-            onClick={onAddClick}
-            sx={{
-              height: 300,
-              cursor: "pointer",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              border: "2px dashed #e0e0e0",
-              backgroundColor: "#fafafa",
-              transition: "all 0.3s ease",
-              padding: 4,
-              "&:hover": {
-                backgroundColor: "#f5f5f5",
-                borderColor: "#1976d2",
-                transform: "translateY(-4px)",
-                boxShadow: "0 8px 25px rgba(25, 118, 210, 0.15)",
-              },
-            }}
-          >
-            <Avatar
-              sx={{
-                width: 60,
-                height: 60,
-                backgroundColor: "primary.main",
-                mb: 2,
-              }}
-            >
-              <AddIcon fontSize="large" />
-            </Avatar>
-            <Typography variant="h6" fontWeight="bold" color="primary">
-              Add New Listing
-            </Typography>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              textAlign="center"
-            >
-              Click to create a new property listing
-            </Typography>
-          </Card>
-        </Grid>
-
-        {/* Existing Listings */}
-        {displayListings.map((listing) => (
-          <Grid item xs={12} sm={6} md={4} key={listing.id}>
-            <Card
-              sx={{
-                height: 300,
-                display: "flex",
-                flexDirection: "column",
-                transition: "all 0.3s ease",
-                "&:hover": {
-                  transform: "translateY(-4px)",
-                  boxShadow: "0 8px 25px rgba(0,0,0,0.15)",
-                },
-              }}
-            >
-              <CardContent sx={{ flexGrow: 1, pb: 1 }}>
-                {/* Header with Property Type and Listing Type */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    mb: 2,
-                  }}
-                >
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                    {getPropertyIcon(listing.propertyType)}
-                    <Typography variant="caption" color="text.secondary">
-                      {listing.propertyType}
-                    </Typography>
-                  </Box>
-                  <Chip
-                    label={listing.listingType}
-                    size="small"
-                    color={getListingTypeColor(listing.listingType)}
-                    variant="outlined"
-                  />
-                </Box>
-
-                {/* Title */}
-                <Typography
-                  variant="h6"
-                  fontWeight="bold"
-                  sx={{
-                    mb: 1,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    display: "-webkit-box",
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: "vertical",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  {listing.title}
-                </Typography>
-
-                {/* Location */}
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "flex-start",
-                    gap: 0.5,
-                    mb: 1,
-                  }}
-                >
-                  <LocationIcon
-                    fontSize="small"
-                    color="action"
-                    sx={{ mt: 0.2 }}
-                  />
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                    }}
-                  >
-                    {listing.address}
-                  </Typography>
-                </Box>
-
-                {/* Project Name */}
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ mb: 1, fontStyle: "italic" }}
-                >
-                  {listing.projectName}
-                </Typography>
-
-                {/* Price */}
-                <Typography variant="h6" color="primary" fontWeight="bold">
-                  {listing.price}
-                </Typography>
-
-                {/* Seller Info */}
-                <Typography variant="caption" color="text.secondary">
-                  Listed by: {listing.sellerName}
-                </Typography>
-              </CardContent>
-
-              <Divider />
-
-              {/* Action Buttons */}
-              <CardActions
-                sx={{ justifyContent: "space-between", px: 2, py: 1 }}
-              >
-                <Button
-                  size="small"
-                  startIcon={<ViewIcon />}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    console.log("View listing:", listing.id);
-                  }}
-                >
-                  View
-                </Button>
-                <Box>
-                  <IconButton
-                    size="small"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log("Edit listing:", listing.id);
-                    }}
-                  >
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    color="error"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log("Delete listing:", listing.id);
-                    }}
-                  >
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
-                </Box>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
-    </Stack>
+        <AddIcon />
+      </Fab>
+    </Box>
   );
 };
 
