@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Typography,
@@ -10,10 +10,11 @@ import {
   TextField,
   Grid,
   useTheme,
+  CircularProgress,
 } from "@mui/material";
 import InventoryGrid from "@/components/inventory/InventoryGrid";
 import ListingModal from "@/components/inventory/ListingModal";
-import { createListing } from "../../lib/listings";
+import { createListing, getListings } from "../../lib/listings";
 import { useAuth } from "../../contexts/AuthContext";
 
 const DashboardWithTabs = () => {
@@ -22,6 +23,7 @@ const DashboardWithTabs = () => {
   const [listings, setListings] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   const handleTabChange = (event, newValue) => setTabIndex(newValue);
 
@@ -40,6 +42,49 @@ const DashboardWithTabs = () => {
     setIsLoading(false)
     handleClose();
   };
+
+
+  useEffect(() => {
+    if (user) {
+      fetchAllListings()
+    }
+  }, [user])
+
+  const fetchAllListings = async () => {
+    setLoading(true)
+    const { listings: allListings, error } = await getListings() // No userId = get all listings
+
+    if (error) {
+      setError(error)
+    } else {
+      setListings(allListings)
+    }
+
+    setLoading(false)
+  }
+
+  // Show a full-page loading spinner overlay when loading
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "rgba(255,255,255,0.7)",
+          zIndex: 9999,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
 
   return (
     <Box
@@ -82,6 +127,7 @@ const DashboardWithTabs = () => {
             open={modalOpen}
             onClose={handleClose}
             onSubmit={handleAddListing}
+            isLoading={isLoading}
           />
         </Box>
       )}
@@ -92,7 +138,7 @@ const DashboardWithTabs = () => {
             Make a Buy Request
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Let us know what kind of vehicle you're looking for, and we'll do
+            Let us know what kind of vehicle you&apos;re looking for, and we&apos;ll do
             our best to match it.
           </Typography>
 

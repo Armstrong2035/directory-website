@@ -1,6 +1,6 @@
 // components/ListingModal.js
 import React, { useState } from "react";
-import { Modal, Box, Typography, TextField, Button } from "@mui/material";
+import { Modal, Box, Typography, TextField, Button, CircularProgress } from "@mui/material";
 import ListingForm from "../ListingForm";
 
 const style = {
@@ -51,7 +51,7 @@ const validate = (form) => {
   );
 };
 
-const ListingModal = ({ open, onClose, onSubmit }) => {
+const ListingModal = ({ open, onClose, onSubmit, isLoading }) => {
   const [formData, setFormData] = useState(initialState);
 
   const handleChange = (e) => {
@@ -61,7 +61,7 @@ const ListingModal = ({ open, onClose, onSubmit }) => {
   const handleSubmit = () => {
     if (!validate(formData)) {
       alert(
-        "Please fill all fields correctly. Phone must include country code."
+        "Please fill all fields correctly."
       );
       return;
     }
@@ -165,8 +165,8 @@ const ListingModal = ({ open, onClose, onSubmit }) => {
         </Box>
 
         <Box sx={{ mt: 2, textAlign: "right" }}>
-          <Button variant="contained" onClick={handleSubmit}>
-            Submit
+          <Button variant="contained" onClick={handleSubmit} disabled={isLoading}>
+            {isLoading ? <CircularProgress size={24} color="inherit" /> : "Submit"}
           </Button>
         </Box>
       </Box>
