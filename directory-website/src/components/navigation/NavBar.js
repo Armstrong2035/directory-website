@@ -16,6 +16,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useAuth } from "../../contexts/AuthContext";
+import AuthButtons from "../auth/AuthButtons";
 
 const gradientBrandStyles = {
   background: "linear-gradient(90deg, #4f8cff 20%, #ffb86b 80%)",
@@ -30,6 +32,7 @@ export default function ResponsiveAppBar() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const router = useRouter();
+  const auth = useAuth();
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -40,12 +43,17 @@ export default function ResponsiveAppBar() {
   };
 
   const handleSignIn = () => {
-    router.push("/auth/signin");
+    router.push("/signin");
     handleMenuClose();
   };
 
   const handleSignUp = () => {
-    router.push("/auth/signup");
+    router.push("/signup");
+    handleMenuClose();
+  };
+
+  const handleDashboard = () => {
+    router.push("/dashboard");
     handleMenuClose();
   };
 
@@ -78,46 +86,74 @@ export default function ResponsiveAppBar() {
 
         {/* Desktop Navigation */}
         {!isMobile ? (
-          <Box sx={{ display: "flex", gap: 2 }}>
-            <Button
-              variant="outlined"
-              onClick={handleSignIn}
-              sx={{
-                color: "#fff",
-                borderColor: "rgba(255, 255, 255, 0.3)",
-                fontWeight: 600,
-                px: 3,
-                py: 1,
-                borderRadius: 2,
-                textTransform: "none",
-                "&:hover": {
-                  borderColor: "#4f8cff",
-                  backgroundColor: "rgba(79, 140, 255, 0.1)",
-                },
-              }}
-            >
-              Sign In
-            </Button>
-            <Button
-              variant="contained"
-              onClick={handleSignUp}
-              sx={{
-                background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
-                color: "#19212b",
-                fontWeight: 700,
-                px: 3,
-                py: 1,
-                borderRadius: 2,
-                textTransform: "none",
-                "&:hover": {
-                  background:
-                    "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
-                  opacity: 0.9,
-                },
-              }}
-            >
-              Sign Up
-            </Button>
+          <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+            {auth.user ? (
+              <>
+                <Button
+                  variant="contained"
+                  onClick={handleDashboard}
+                  sx={{
+                    background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
+                    color: "#19212b",
+                    fontWeight: 700,
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    textTransform: "none",
+                    boxShadow: "none",
+                    '&:hover': {
+                      background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
+                      opacity: 0.9,
+                    },
+                  }}
+                >
+                  Dashboard
+                </Button>
+                <AuthButtons />
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="outlined"
+                  onClick={handleSignIn}
+                  sx={{
+                    color: "#fff",
+                    borderColor: "rgba(255, 255, 255, 0.3)",
+                    fontWeight: 600,
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    textTransform: "none",
+                    "&:hover": {
+                      borderColor: "#4f8cff",
+                      backgroundColor: "rgba(79, 140, 255, 0.1)",
+                    },
+                  }}
+                >
+                  Sign In
+                </Button>
+                <Button
+                  variant="contained"
+                  onClick={handleSignUp}
+                  sx={{
+                    background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
+                    color: "#19212b",
+                    fontWeight: 700,
+                    px: 3,
+                    py: 1,
+                    borderRadius: 2,
+                    textTransform: "none",
+                    "&:hover": {
+                      background:
+                        "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
+                      opacity: 0.9,
+                    },
+                  }}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </Box>
         ) : (
           /* Mobile Menu */
@@ -147,32 +183,55 @@ export default function ResponsiveAppBar() {
                 },
               }}
             >
-              <MenuItem
-                onClick={handleSignIn}
-                sx={{
-                  color: "#fff",
-                  py: 1.5,
-                  px: 3,
-                  "&:hover": {
-                    backgroundColor: "rgba(79, 140, 255, 0.1)",
-                  },
-                }}
-              >
-                Sign In
-              </MenuItem>
-              <MenuItem
-                onClick={handleSignUp}
-                sx={{
-                  color: "#fff",
-                  py: 1.5,
-                  px: 3,
-                  "&:hover": {
-                    backgroundColor: "rgba(79, 140, 255, 0.1)",
-                  },
-                }}
-              >
-                Sign Up
-              </MenuItem>
+              {auth.user ? (
+                <>
+                  <MenuItem
+                    onClick={handleDashboard}
+                    sx={{
+                      color: "#fff",
+                      py: 1.5,
+                      px: 3,
+                      "&:hover": {
+                        backgroundColor: "rgba(79, 140, 255, 0.1)",
+                      },
+                    }}
+                  >
+                    Dashboard
+                  </MenuItem>
+                  <Box sx={{ px: 2, py: 1 }}>
+                    <AuthButtons />
+                  </Box>
+                </>
+              ) : (
+                <>
+                  <MenuItem
+                    onClick={handleSignIn}
+                    sx={{
+                      color: "#fff",
+                      py: 1.5,
+                      px: 3,
+                      "&:hover": {
+                        backgroundColor: "rgba(79, 140, 255, 0.1)",
+                      },
+                    }}
+                  >
+                    Sign In
+                  </MenuItem>
+                  <MenuItem
+                    onClick={handleSignUp}
+                    sx={{
+                      color: "#fff",
+                      py: 1.5,
+                      px: 3,
+                      "&:hover": {
+                        backgroundColor: "rgba(79, 140, 255, 0.1)",
+                      },
+                    }}
+                  >
+                    Sign Up
+                  </MenuItem>
+                </>
+              )}
             </Menu>
           </Box>
         )}

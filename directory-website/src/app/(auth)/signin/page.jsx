@@ -18,6 +18,7 @@ import LoadingButton from "../../../components/auth/LoadingButton";
 import GoogleSignInButton from "../../../components/auth/GoogleSignInButton";
 import { useAuth } from "../../../contexts/AuthContext";
 
+
 export default function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
@@ -199,7 +200,7 @@ export default function SignIn() {
             Don't have an account?
           </Typography>
           <Link
-            href="/auth/signup"
+            href="/signup"
             style={{
               color: "#667eea",
               textDecoration: "none",

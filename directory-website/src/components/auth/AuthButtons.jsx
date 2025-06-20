@@ -32,8 +32,9 @@ export default function AuthButtons() {
 
   const handleLogout = async () => {
     await auth.logout();
-    router.refresh();
     handleClose();
+    router.push("/signin")
+
   };
 
   console.log("Auth Phoy", auth.user.photoURL)

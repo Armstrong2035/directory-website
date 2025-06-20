@@ -1,7 +1,9 @@
 "use client";
 
-import { Box, Typography, Button, Grid, Paper, Container } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { typography } from "@/styles/typography";
+import { useAuth } from "../../contexts/AuthContext";
+import { useRouter } from "next/navigation";
 
 export const gradientBrandStyles = {
   background: "linear-gradient(90deg, #4f8cff 20%, #ffb86b 80%)",
@@ -12,6 +14,17 @@ export const gradientBrandStyles = {
 };
 
 export default function Hero() {
+  const auth = useAuth();
+  const router = useRouter();
+
+  const handleCTA = () => {
+    if (auth.user) {
+      router.push("/dashboard");
+    } else {
+      router.push("/signin");
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -86,6 +99,7 @@ export default function Hero() {
             opacity: 0.9,
           },
         }}
+        onClick={handleCTA}
       >
         Start transacting now
       </Button>

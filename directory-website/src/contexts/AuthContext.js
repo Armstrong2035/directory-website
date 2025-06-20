@@ -1,9 +1,10 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react"
-import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth"
-import { auth } from "../firebase/client"
+import { onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth"
+import { auth, db } from "../firebase/client"
 import { useRouter } from "next/navigation"
+import { doc, setDoc } from "firebase/firestore"
 
 const AuthContext = createContext({})
 
@@ -45,10 +46,25 @@ export const AuthProvider = ({ children }) => {
   const signUpWithEmail = async (email, password, displayName) => {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password)
+      const user = result.user
+
       // Update display name if provided
       if (displayName && result.user) {
-        await result.user.updateProfile({ displayName })
+        await updateProfile(user, {
+          displayName: displayName,
+        })
       }
+
+          // Create user document in Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid,
+      email: user.email,
+      displayName: displayName,
+      role: "landlord",
+      createdAt: new Date().toISOString(),
+    })
+
+
       return { user: result.user, error: null }
     } catch (error) {
       return { user: null, error: error.message }
@@ -59,7 +75,23 @@ export const AuthProvider = ({ children }) => {
     try {
       const provider = new GoogleAuthProvider()
       const result = await signInWithPopup(auth, provider)
-      return { user: result.user, error: null }
+      const user = result.user
+
+          // Create or update user document in Firestore
+    await setDoc(
+      doc(db, "users", user.uid),
+      {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        role: "landlord",
+        createdAt: new Date().toISOString(),
+      },
+      { merge: true },
+    )
+
+      return { user: user, error: null }
     } catch (error) {
       return { user: null, error: error.message }
     }
