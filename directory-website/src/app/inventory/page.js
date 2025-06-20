@@ -17,16 +17,14 @@ const Inventory = () => {
   };
 
   return (
-    <DashboardLayout>
-      <Box sx={{ p: 3 }}>
-        <InventoryGrid listings={listings} onAddClick={handleOpen} />
-        <ListingModal
-          open={open}
-          onClose={handleClose}
-          onSubmit={handleAddListing}
-        />
-      </Box>
-    </DashboardLayout>
+    <Box sx={{ p: 3 }}>
+      <InventoryGrid listings={listings} onAddClick={handleOpen} />
+      <ListingModal
+        open={open}
+        onClose={handleClose}
+        onSubmit={handleAddListing}
+      />
+    </Box>
   );
 };
 

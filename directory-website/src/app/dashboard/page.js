@@ -1,119 +1,123 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  Toolbar,
-  AppBar,
   Typography,
-  CssBaseline,
-  CircularProgress,
+  Tabs,
+  Tab,
+  Divider,
+  Button,
+  TextField,
+  Grid,
+  useTheme,
 } from "@mui/material";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import AuthButtons from "../../components/auth/AuthButtons";
-import { useAuth } from "../../contexts/AuthContext";
+import InventoryGrid from "@/components/inventory/InventoryGrid";
+import ListingModal from "@/components/inventory/ListingModal";
 
-const drawerWidth = 240;
+const DashboardWithTabs = () => {
+  const theme = useTheme();
+  const [tabIndex, setTabIndex] = useState(0);
+  const [listings, setListings] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
 
-const navItems = ["Home", "Inventory", "Leads", "Offers", "Profile"];
+  const handleTabChange = (event, newValue) => setTabIndex(newValue);
 
-export default function DashboardLayout({ children }) {
-  const auth = useAuth();
-  const router = useRouter();
-
-  // Handle authentication redirect in useEffect to avoid render issues
-  useEffect(() => {
-    if (!auth.loading && !auth.user) {
-      router.push("/signin");
-    }
-  }, [auth.loading, auth.user, router]);
-
-  // Show loading spinner while auth is loading
-  if (auth.loading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
-
-  // Return null while redirect is happening
-  if (!auth.user) {
-    return null;
-  }
+  // Inventory Handlers
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
+  const handleAddListing = (newListing) => {
+    setListings((prev) => [...prev, newListing]);
+    handleClose();
+  };
 
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
-
-      {/* AppBar */}
-      <AppBar
-        position="fixed"
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-      >
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <Typography variant="h6" noWrap component="div">
-            My Dashboard
-          </Typography>
-          <AuthButtons />
-        </Toolbar>
-      </AppBar>
-
-      {/* Sidebar Drawer */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        <Toolbar />
-        <Box sx={{ overflow: "auto" }}>
-          <List>
-            {navItems.map((text) => (
-              <Link
-                href={`/${text.toLowerCase()}`}
-                key={text}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <ListItem button>
-                  <ListItemText primary={text} />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-        </Box>
-      </Drawer>
-
-      {/* Main Content Area */}
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar />
-        {children || (
-          <Box>
-            <Typography variant="h4" gutterBottom>
-              Welcome to the Dashboard!
-            </Typography>
-            <Typography variant="body1">
-              Hello, {auth.user.displayName || auth.user.email}!
-            </Typography>
-          </Box>
-        )}
+    <Box
+      sx={{
+        p: { xs: 2, sm: 4 },
+        minHeight: "100vh",
+        bgcolor: theme.palette.background.default,
+      }}
+    >
+      {/* Header */}
+      <Box mb={4}>
+        <Typography variant="h4" gutterBottom>
+          Dashboard
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary">
+          Manage your inventory and requests from one place.
+        </Typography>
       </Box>
+
+      {/* Tabs */}
+      <Tabs
+        value={tabIndex}
+        onChange={handleTabChange}
+        indicatorColor="primary"
+        textColor="primary"
+        variant="scrollable"
+        scrollButtons="auto"
+        sx={{ mb: 3 }}
+      >
+        <Tab label="Inventory" />
+        <Tab label="Buy Request" />
+      </Tabs>
+      <Divider sx={{ mb: 4 }} />
+
+      {/* Tab Panels */}
+      {tabIndex === 0 && (
+        <Box>
+          <InventoryGrid listings={listings} onAddClick={handleOpen} />
+          <ListingModal
+            open={modalOpen}
+            onClose={handleClose}
+            onSubmit={handleAddListing}
+          />
+        </Box>
+      )}
+
+      {tabIndex === 1 && (
+        <Box maxWidth="sm">
+          <Typography variant="h6" gutterBottom>
+            Make a Buy Request
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            Let us know what kind of vehicle you're looking for, and we'll do
+            our best to match it.
+          </Typography>
+
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Vehicle Type" variant="outlined" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Preferred Make/Model"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField fullWidth label="Budget" variant="outlined" />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                rows={4}
+                label="Additional Notes"
+                variant="outlined"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Button variant="contained" color="primary">
+                Submit Request
+              </Button>
+            </Grid>
+          </Grid>
+        </Box>
+      )}
     </Box>
   );
-}
+};
+
+export default DashboardWithTabs;
