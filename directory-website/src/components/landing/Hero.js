@@ -2,6 +2,7 @@
 
 import { Box, Typography, Button, Grid, Paper, Container } from "@mui/material";
 import { typography } from "@/styles/typography";
+import { useRouter } from "next/navigation";
 
 export const gradientBrandStyles = {
   background: "linear-gradient(90deg, #4f8cff 20%, #ffb86b 80%)",
@@ -12,6 +13,7 @@ export const gradientBrandStyles = {
 };
 
 export default function Hero() {
+  const router = useRouter();
   return (
     <Box
       sx={{
@@ -71,6 +73,7 @@ export default function Hero() {
       <Button
         variant="contained"
         size="large"
+        onClick={() => router.push("/auth/signup")}
         sx={{
           background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
           color: "#19212b",
