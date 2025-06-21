@@ -5,7 +5,6 @@ import { typography } from "@/styles/typography";
 import { useAuth } from "../../contexts/AuthContext";
 import { useRouter } from "next/navigation";
 
-
 export const gradientBrandStyles = {
   background: "linear-gradient(90deg, #4f8cff 20%, #ffb86b 80%)",
   WebkitBackgroundClip: "text",
@@ -85,7 +84,6 @@ export default function Hero() {
       <Button
         variant="contained"
         size="large"
-        onClick={() => router.push("/auth/signup")}
         sx={{
           background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
           color: "#19212b",

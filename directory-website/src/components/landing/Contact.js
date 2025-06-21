@@ -19,7 +19,7 @@ export default function Contact() {
   return (
     <Box sx={{ mb: 6 }}>
       <Typography variant="h5" component="h2" gutterBottom align="center">
-        Questions? We're Here to Help
+        Questions? We&apos;re Here to Help
       </Typography>
 
       <Paper
@@ -42,7 +42,7 @@ export default function Contact() {
         </Box>
 
         <Typography variant="body1" sx={{ mb: 4 }}>
-          Join thousands of verified buyers and sellers who've discovered a
+          Join thousands of verified buyers and sellers who&apos;ve discovered a
           better way to do real estate.
         </Typography>
 

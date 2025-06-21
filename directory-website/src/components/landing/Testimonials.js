@@ -64,7 +64,7 @@ export default function Testimonials() {
                   zIndex: 1,
                 }}
               >
-                "{testimonial.quote}"
+                &ldquo;{testimonial.quote}&rdquo;
               </Typography>
               <Box sx={{ mt: "auto", display: "flex", alignItems: "center" }}>
                 <Avatar sx={{ bgcolor: "primary.main", mr: 2 }}>

@@ -150,9 +150,9 @@ export default function ForBuyers() {
                   mb: 4,
                 }}
               >
-                Stop browsing endless listings that don't match what you really
-                want. Tell us exactly what you're looking for, and we'll connect
-                you with sellers who have it.
+                Stop browsing endless listings that don&apos;t match what you
+                really want. Tell us exactly what you&apos;re looking for, and
+                we&apos;ll connect you with sellers who have it.
               </Typography>
 
               <Typography
