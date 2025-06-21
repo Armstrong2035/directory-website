@@ -12,56 +12,122 @@ import {
   useTheme,
   CircularProgress,
 } from "@mui/material";
-import InventoryGrid from "@/components/inventory/InventoryGrid";
-import ListingModal from "@/components/inventory/ListingModal";
+import ListingGrid from "@/components/shared/ListingGrid";
+import ListingModal from "@/components/shared/ListingModal";
 import { createListing, getListings } from "../../lib/listings";
 import { useAuth } from "../../contexts/AuthContext";
 
 const DashboardWithTabs = () => {
   const theme = useTheme();
   const [tabIndex, setTabIndex] = useState(0);
-  const [listings, setListings] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [inventoryListings, setInventoryListings] = useState([]);
+  const [sellRequests, setSellRequests] = useState([]);
+  const [inventoryModalOpen, setInventoryModalOpen] = useState(false);
+  const [sellRequestModalOpen, setSellRequestModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleTabChange = (event, newValue) => setTabIndex(newValue);
 
   // Inventory Handlers
-  const handleOpen = () => setModalOpen(true);
-  const handleClose = () => setModalOpen(false);
-  const auth = useAuth()
-  const user = auth.user
+  const handleInventoryOpen = () => setInventoryModalOpen(true);
+  const handleInventoryClose = () => setInventoryModalOpen(false);
 
-  const handleAddListing = async (newListing) => {
-    setIsLoading(true)
-    const { id, error: createError } = await createListing(newListing, user.uid, user)
-    alert(
-      "Listing created successfully"
-    );
-    setIsLoading(false)
-    handleClose();
+  // Sell Request Handlers
+  const handleSellRequestOpen = () => setSellRequestModalOpen(true);
+  const handleSellRequestClose = () => setSellRequestModalOpen(false);
+
+  const auth = useAuth();
+  const user = auth.user;
+
+  const handleAddInventoryListing = async (newListing) => {
+    setIsLoading(true);
+    try {
+      const { id, error: createError } = await createListing(
+        newListing,
+        user.uid,
+        user
+      );
+
+      if (createError) {
+        alert(`Error creating listing: ${createError}`);
+        setIsLoading(false);
+        return;
+      }
+
+      alert("Listing created successfully");
+      setIsLoading(false);
+      handleInventoryClose();
+      fetchAllListings(); // Refresh the listings
+    } catch (error) {
+      console.error("Error in handleAddInventoryListing:", error);
+      alert(`Error creating listing: ${error.message}`);
+      setIsLoading(false);
+    }
   };
 
+  const handleAddSellRequest = async (newRequest) => {
+    setIsLoading(true);
+    try {
+      // For now, we'll treat sell requests the same as listings
+      // In a real app, you might have a separate collection for sell requests
+      const { id, error: createError } = await createListing(
+        newRequest,
+        user.uid,
+        user
+      );
+
+      if (createError) {
+        alert(`Error creating sell request: ${createError}`);
+        setIsLoading(false);
+        return;
+      }
+
+      alert("Sell request created successfully");
+      setIsLoading(false);
+      handleSellRequestClose();
+      fetchAllSellRequests(); // Refresh the sell requests
+    } catch (error) {
+      console.error("Error in handleAddSellRequest:", error);
+      alert(`Error creating sell request: ${error.message}`);
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (user) {
-      fetchAllListings()
+      fetchAllListings();
+      fetchAllSellRequests();
     }
-  }, [user])
+  }, [user]);
 
   const fetchAllListings = async () => {
-    setLoading(true)
-    const { listings: allListings, error } = await getListings() // No userId = get all listings
+    setLoading(true);
+    const { listings: allListings, error } = await getListings(); // No userId = get all listings
 
     if (error) {
-      setError(error)
+      console.error("Error fetching listings:", error);
     } else {
-      setListings(allListings)
+      setInventoryListings(allListings);
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+  };
+
+  const fetchAllSellRequests = async () => {
+    // For now, we'll use the same listings but filter them
+    // In a real app, you might have a separate collection for sell requests
+    const { listings: allListings, error } = await getListings();
+
+    if (error) {
+      console.error("Error fetching sell requests:", error);
+    } else {
+      // Filter for sell requests (you might want to add a field to distinguish them)
+      setSellRequests(
+        allListings.filter((listing) => listing.listingType === "Sale")
+      );
+    }
+  };
 
   // Show a full-page loading spinner overlay when loading
   if (isLoading) {
@@ -100,7 +166,7 @@ const DashboardWithTabs = () => {
           Dashboard
         </Typography>
         <Typography variant="subtitle1" color="text.secondary">
-          Manage your inventory and requests from one place.
+          Manage your inventory and sell requests from one place.
         </Typography>
       </Box>
 
@@ -115,62 +181,46 @@ const DashboardWithTabs = () => {
         sx={{ mb: 3 }}
       >
         <Tab label="Inventory" />
-        <Tab label="Buy Request" />
+        <Tab label="Buy request" />
       </Tabs>
       <Divider sx={{ mb: 4 }} />
 
       {/* Tab Panels */}
       {tabIndex === 0 && (
         <Box>
-          <InventoryGrid listings={listings} onAddClick={handleOpen} />
+          <ListingGrid
+            listings={inventoryListings}
+            onAddClick={handleInventoryOpen}
+            title="My Inventory"
+            emptyMessage="No inventory listings found. Add your first listing!"
+          />
           <ListingModal
-            open={modalOpen}
-            onClose={handleClose}
-            onSubmit={handleAddListing}
+            open={inventoryModalOpen}
+            onClose={handleInventoryClose}
+            onSubmit={handleAddInventoryListing}
             isLoading={isLoading}
+            title="Add New Inventory Listing"
+            submitButtonText="Create Listing"
           />
         </Box>
       )}
 
       {tabIndex === 1 && (
-        <Box maxWidth="sm">
-          <Typography variant="h6" gutterBottom>
-            Make a Buy Request
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            Let us know what kind of vehicle you&apos;re looking for, and we&apos;ll do
-            our best to match it.
-          </Typography>
-
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Vehicle Type" variant="outlined" />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                label="Preferred Make/Model"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField fullWidth label="Budget" variant="outlined" />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                multiline
-                rows={4}
-                label="Additional Notes"
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Button variant="contained" color="primary">
-                Submit Request
-              </Button>
-            </Grid>
-          </Grid>
+        <Box>
+          <ListingGrid
+            listings={sellRequests}
+            onAddClick={handleSellRequestOpen}
+            title="My Buy Requests"
+            emptyMessage="No sell requests found. Create your first sell request!"
+          />
+          <ListingModal
+            open={sellRequestModalOpen}
+            onClose={handleSellRequestClose}
+            onSubmit={handleAddSellRequest}
+            isLoading={isLoading}
+            title="Create New Sell Request"
+            submitButtonText="Create Sell Request"
+          />
         </Box>
       )}
     </Box>
