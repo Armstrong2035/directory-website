@@ -47,10 +47,9 @@ export default function Hero() {
           textAlign: "center",
         }}
       >
-        DIRECT CONNECTION WITH BUYERS & SELLERS
+        We get our hands dirty to bring you clean deals.
       </Typography>
       <Typography
-        variant="h1"
         sx={{
           ...typography.heading1,
           fontSize: { xs: "2.5rem", md: "4rem", lg: "4.5rem" },
@@ -58,7 +57,7 @@ export default function Hero() {
           textAlign: "center",
         }}
       >
-        Meet direct buyers, and sellers with
+        Skip the Agents. Meet Real Buyers and Sellers, Directly.
         <br />
         <Typography
           component="span"
@@ -68,7 +67,7 @@ export default function Hero() {
             fontSize: { xs: "2.5rem", md: "4rem", lg: "4.5rem" },
           }}
         >
-          Subarashi Scout
+          Subarashi Elite
         </Typography>
       </Typography>
       <Typography
@@ -79,7 +78,8 @@ export default function Hero() {
           textAlign: "center",
         }}
       >
-        Skip the middleman. Connect with buyers and sellers directly
+        Cut through the noise, deadends, and endless back-and-forth. We connect
+        ready buyers with proof of funds to vetted homeowners.
       </Typography>
       <Button
         variant="contained"
