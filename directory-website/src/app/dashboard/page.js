@@ -12,8 +12,8 @@ import {
   useTheme,
   CircularProgress,
 } from "@mui/material";
-import ListingGrid from "@/components/shared/ListingGrid";
-import ListingModal from "@/components/shared/ListingModal";
+import ListingGrid from "@/components/listing/ListingGrid";
+import ListingModal from "@/components/listing/ListingModal";
 import { createListing, getListings } from "../../lib/listings";
 import { useAuth } from "../../contexts/AuthContext";
 

@@ -8,10 +8,8 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ backgroundColor: "#19212b" }}>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
+      <body style={{ backgroundColor: "#ffffff" }}>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

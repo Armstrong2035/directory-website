@@ -57,9 +57,9 @@ export default function Hero() {
           textAlign: "center",
         }}
       >
-        Skip the Agents. Meet Real Buyers and Sellers, Directly.
+        The Smart Way to Match Buyers and Sellers.
         <br />
-        <Typography
+        {/* <Typography
           component="span"
           sx={{
             ...typography.heading1,
@@ -68,7 +68,7 @@ export default function Hero() {
           }}
         >
           Subarashi Elite
-        </Typography>
+        </Typography> */}
       </Typography>
       <Typography
         variant="h6"
@@ -78,8 +78,8 @@ export default function Hero() {
           textAlign: "center",
         }}
       >
-        Cut through the noise, deadends, and endless back-and-forth. We connect
-        ready buyers with proof of funds to vetted homeowners.
+        Off-market deals. Verified users. Seamless connections. Welcome to
+        Rashii 🍀 — where real estate becomes smarter, safer, and faster.
       </Typography>
       <Button
         variant="contained"
