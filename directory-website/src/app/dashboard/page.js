@@ -39,6 +39,7 @@ const DashboardWithTabs = () => {
 
   const auth = useAuth();
   const user = auth.user;
+  console.log("User", user);
 
   const handleAddInventoryListing = async (newListing) => {
     setIsLoading(true);
