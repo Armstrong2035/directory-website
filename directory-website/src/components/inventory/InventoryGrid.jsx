@@ -1,5 +1,5 @@
 import React from "react";
-import ListingGrid from "../shared/ListingGrid";
+import ListingGrid from "../listing/ListingGrid";
 
 const InventoryGrid = ({ listings = [], onAddClick }) => {
   return (

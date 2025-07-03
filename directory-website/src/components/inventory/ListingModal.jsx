@@ -1,6 +1,6 @@
 // components/inventory/ListingModal.jsx
 import React from "react";
-import SharedListingModal from "../shared/ListingModal";
+import SharedListingModal from "../listing/ListingModal";
 
 const ListingModal = ({ open, onClose, onSubmit, isLoading }) => {
   return (

@@ -21,6 +21,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MatchIcon from "@mui/icons-material/People";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { typography } from "@/styles/typography";
+import Link from "next/link";
 
 import { StepConnector, stepConnectorClasses } from "@mui/material";
 import { styled } from "@mui/material/styles";
@@ -218,25 +219,27 @@ export default function HowItWorks() {
 
       {/* CTA Button */}
       <Box sx={{ textAlign: "center", mt: 6 }}>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{
-            px: 5,
-            py: 1.5,
-            background: "linear-gradient(90deg, #4f8cff, #ffb86b)",
-            color: "#1a1f2e",
-            fontWeight: 700,
-            textTransform: "none",
-            borderRadius: 2,
-            boxShadow: "0 4px 14px rgba(0,0,0,0.3)",
-            "&:hover": {
-              background: "linear-gradient(270deg, #4f8cff, #ffb86b)",
-            },
-          }}
-        >
-          Get Started Now
-        </Button>
+        <Link href="/signup" style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            size="large"
+            sx={{
+              px: 5,
+              py: 1.5,
+              background: "linear-gradient(90deg, #4f8cff, #ffb86b)",
+              color: "#1a1f2e",
+              fontWeight: 700,
+              textTransform: "none",
+              borderRadius: 2,
+              boxShadow: "0 4px 14px rgba(0,0,0,0.3)",
+              "&:hover": {
+                background: "linear-gradient(270deg, #4f8cff, #ffb86b)",
+              },
+            }}
+          >
+            Get Started Now
+          </Button>
+        </Link>
       </Box>
 
       {/* Keyframes (inject into <style jsx global> or your CSS baseline) */}
