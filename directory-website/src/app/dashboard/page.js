@@ -46,6 +46,125 @@ const secondaryNavItems = [
 
 export default function PermanentDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  // Sell Request Handlers
+  const handleSellRequestOpen = () => setSellRequestModalOpen(true);
+  const handleSellRequestClose = () => setSellRequestModalOpen(false);
+
+  const auth = useAuth();
+  const user = auth.user;
+  console.log("User", user);
+
+  const handleAddInventoryListing = async (newListing) => {
+    setIsLoading(true);
+    try {
+      const { id, error: createError } = await createListing(
+        newListing,
+        user.uid,
+        user
+      );
+
+      if (createError) {
+        alert(`Error creating listing: ${createError}`);
+        setIsLoading(false);
+        return;
+      }
+
+      alert("Listing created successfully");
+      setIsLoading(false);
+      handleInventoryClose();
+      fetchAllListings(); // Refresh the listings
+    } catch (error) {
+      console.error("Error in handleAddInventoryListing:", error);
+      alert(`Error creating listing: ${error.message}`);
+      setIsLoading(false);
+    }
+  };
+
+  const handleAddSellRequest = async (newRequest) => {
+    setIsLoading(true);
+    try {
+      // For now, we'll treat sell requests the same as listings
+      // In a real app, you might have a separate collection for sell requests
+      const { id, error: createError } = await createListing(
+        newRequest,
+        user.uid,
+        user
+      );
+
+      if (createError) {
+        alert(`Error creating sell request: ${createError}`);
+        setIsLoading(false);
+        return;
+      }
+
+      alert("Sell request created successfully");
+      setIsLoading(false);
+      handleSellRequestClose();
+      fetchAllSellRequests(); // Refresh the sell requests
+    } catch (error) {
+      console.error("Error in handleAddSellRequest:", error);
+      alert(`Error creating sell request: ${error.message}`);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchAllListings();
+      fetchAllSellRequests();
+    }
+  }, [user]);
+
+  const fetchAllListings = async () => {
+    setLoading(true);
+    const { listings: allListings, error } = await getListings(); // No userId = get all listings
+
+    if (error) {
+      console.error("Error fetching listings:", error);
+    } else {
+      setInventoryListings(allListings);
+    }
+
+    setLoading(false);
+  };
+
+  const fetchAllSellRequests = async () => {
+    // For now, we'll use the same listings but filter them
+    // In a real app, you might have a separate collection for sell requests
+    const { listings: allListings, error } = await getListings();
+
+    if (error) {
+      console.error("Error fetching sell requests:", error);
+    } else {
+      // Filter for sell requests (you might want to add a field to distinguish them)
+      setSellRequests(
+        allListings.filter((listing) => listing.listingType === "Sale")
+      );
+    }
+  };
+
+  // Show a full-page loading spinner overlay when loading
+  if (isLoading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "rgba(255,255,255,0.7)",
+          zIndex: 9999,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
 
   return (
     <Box sx={{ display: "flex" }}>
