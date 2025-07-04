@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Box } from "@mui/material";
 import InventoryGrid from "@/components/inventory/InventoryGrid";
 import ListingModal from "@/components/inventory/ListingModal";
-import DashboardLayout from "../dashboard/page";
+import DashboardLayout from "../dashboard/prev-version/page";
 const Inventory = () => {
   const [open, setOpen] = useState(false);
   const [listings, setListings] = useState([]);

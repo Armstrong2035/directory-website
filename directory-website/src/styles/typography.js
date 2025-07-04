@@ -32,3 +32,53 @@ export const typography = {
     lineHeight: "24px",
   },
 };
+
+export const dashboardTypographyStyles = {
+  smallSemiBold: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 600,
+    fontSize: "14px",
+    letterSpacing: "0.3px",
+  },
+
+  largeBold: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 700,
+    fontSize: "32px",
+    letterSpacing: "-0.11px",
+  },
+  extraLargeBold: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 700,
+    fontSize: "80px",
+    letterSpacing: "1px",
+  },
+
+  tinyLight: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 300,
+    fontSize: "12px",
+    letterSpacing: "0.3px",
+  },
+
+  smallBold: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 700,
+    fontSize: "14px",
+    letterSpacing: "0.3px",
+  },
+
+  mediumSemiBold: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 600,
+    fontSize: "16px",
+    letterSpacing: "0px",
+  },
+
+  smallBoldTight: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 700,
+    fontSize: "14px",
+    letterSpacing: "-0.11px",
+  },
+};

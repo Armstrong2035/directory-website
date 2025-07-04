@@ -1,4 +1,13 @@
+import Head from "next/head";
 import { AuthProvider } from "../contexts/AuthContext";
+import { Nunito_Sans } from "next/font/google";
+
+const nunitoSans = Nunito_Sans({
+  subsets: ["latin"],
+  weight: ["200", "400", "600", "800"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
 
 export const metadata = {
   title: "Create Next App",
@@ -14,3 +23,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+2;
