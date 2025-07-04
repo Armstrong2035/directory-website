@@ -29,6 +29,8 @@ import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PowerSettingsNewOutlinedIcon from "@mui/icons-material/PowerSettingsNewOutlined";
 import { dashboardTypographyStyles } from "@/styles/typography";
 import DashboardContent from "@/components/dashboardContent/DashboardContent";
+import { useAuth } from "@/contexts/AuthContext";
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
@@ -46,6 +48,8 @@ const secondaryNavItems = [
 
 export default function PermanentDrawer() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [inventoryModalOpen, setInventoryModalOpen] = React.useState(false);
   // Sell Request Handlers
   const handleSellRequestOpen = () => setSellRequestModalOpen(true);
   const handleSellRequestClose = () => setSellRequestModalOpen(false);
