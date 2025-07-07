@@ -16,9 +16,13 @@ import {
   Box,
   Chip,
   Stack,
+  Button,
+  AppBar,
+  Toolbar,
 } from "@mui/material";
 import { dashboardTypographyStyles } from "@/styles/typography";
 import Image from "next/image";
+import ListingModal from "./ListingModal";
 
 const listings = [
   {
@@ -40,13 +44,31 @@ const listings = [
     type: "Buy",
   },
   {
-    name: "Marina Heights Tower",
-    image: "/images/marina-heights.png",
-    location: "Desert Pearl Boulevard",
+    name: "Golden Dunes Villas",
+    image: "/images/golden-dunes.png",
+    location: "Emirates Bay",
     beds: 3,
     bath: 4,
-    price: "AED 634,295",
-    type: "Rent",
+    price: "AED 534,295",
+    type: "Buy",
+  },
+  {
+    name: "Golden Dunes Villas",
+    image: "/images/golden-dunes.png",
+    location: "Emirates Bay",
+    beds: 3,
+    bath: 4,
+    price: "AED 534,295",
+    type: "Buy",
+  },
+  {
+    name: "Golden Dunes Villas",
+    image: "/images/golden-dunes.png",
+    location: "Emirates Bay",
+    beds: 3,
+    bath: 4,
+    price: "AED 534,295",
+    type: "Buy",
   },
 ];
 
@@ -69,8 +91,23 @@ const ListingTypeChip = ({ type }) => {
 
 export default function InventoryTable() {
   return (
-    <Paper sx={{ borderRadius: 3, overflow: "hidden" }}>
-      <Box p={3}>
+    <Paper
+      sx={{
+        borderRadius: 3,
+        overflow: "hidden", // Paper should not scroll
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        position: "relative", // Keep relative positioning for fixed button
+      }}
+    >
+      {/* Scrollable content area */}
+      <Box
+        sx={{
+          p: 3,
+          pb: 10, // Add padding bottom to prevent content from going under the fixed button
+        }}
+      >
         <Typography
           variant="h6"
           sx={{ fontWeight: 700, mb: 2, color: "#202224" }}
@@ -78,8 +115,10 @@ export default function InventoryTable() {
           Inventory Details
         </Typography>
 
-        <TableContainer>
-          <Table>
+        <TableContainer
+          sx={{ maxHeight: "calc(100vh - 200px)", overflow: "auto" }}
+        >
+          <Table stickyHeader>
             <TableHead>
               <TableRow sx={{ bgcolor: "#F5F7FA" }}>
                 <TableCell sx={{ ...dashboardTypographyStyles.smallBoldTight }}>
@@ -157,6 +196,8 @@ export default function InventoryTable() {
           </Table>
         </TableContainer>
       </Box>
+
+      <ListingModal />
     </Paper>
   );
 }

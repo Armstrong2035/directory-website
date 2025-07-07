@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import InventoryGrid from "@/components/inventory/InventoryGrid";
-import ListingModal from "@/components/inventory/ListingModal";
-import DashboardLayout from "../dashboard/prev-version/page";
-const Inventory = () => {
+// import InventoryGrid from "@/components/inventory/InventoryGrid";
+// import ListingModal from "@/components/inventory/ListingModal";
+import DashboardLayout from "../dashboardLayout/layout";
+import Inventory from "@/components/inventory/Inventory";
+export default function Page() {
   const [open, setOpen] = useState(false);
   const [listings, setListings] = useState([]);
 
@@ -17,15 +18,8 @@ const Inventory = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <InventoryGrid listings={listings} onAddClick={handleOpen} />
-      <ListingModal
-        open={open}
-        onClose={handleClose}
-        onSubmit={handleAddListing}
-      />
-    </Box>
+    <DashboardLayout>
+      <Inventory />
+    </DashboardLayout>
   );
-};
-
-export default Inventory;
+}
