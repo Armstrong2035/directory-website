@@ -31,6 +31,7 @@ import { dashboardTypographyStyles } from "@/styles/typography";
 import DashboardContent from "@/components/dashboardContent/DashboardContent";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect } from "react";
+import CircularProgress from "@mui/material";
 
 const drawerWidth = 240;
 
