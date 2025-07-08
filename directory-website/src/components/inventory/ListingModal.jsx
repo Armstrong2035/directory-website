@@ -3,6 +3,7 @@ import React from "react";
 import SharedListingModal from "../listing/ListingModal";
 import { Box, Button } from "@mui/material";
 import { useState } from "react";
+import AddListingModal from "./add-listing-modal";
 
 const ListingModal = ({}) => {
   const [inventoryModalOpen, setInventoryModalOpen] = useState(false);
@@ -62,14 +63,9 @@ const ListingModal = ({}) => {
           Add Inventory
         </Button>
       </Box>
-      <SharedListingModal
-        open={inventoryModalOpen}
-        onClose={handleInventoryClose}
-        onSubmit={handleAddInventoryListing}
-        isLoading={isLoading}
-        title="Add New Listing"
-        submitButtonText="Submit"
-      />
+      <AddListingModal open={inventoryModalOpen} onClose={handleInventoryClose} onSubmit={handleAddInventoryListing} />
+
+
     </Box>
   );
 };

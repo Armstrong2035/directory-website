@@ -5,6 +5,7 @@ import DashboardCards from "./dashboardControls/DashboardCards";
 import DashboardFilters from "./dashboardControls/DashboardFilters";
 import InventoryList from "../inventory/InventoryList";
 import { Inventory } from "@mui/icons-material";
+import AddListingModal from "../inventory/add-listing-modal";
 
 export default function DashboardContent() {
   return (
@@ -35,6 +36,7 @@ export default function DashboardContent() {
       <Divider sx={{ my: 4 }} />
 
       <InventoryList />
+      <AddListingModal   open={isModalOpen} onClose={handleCloseModal} onSubmit={handleCreateListing} />
     </Box>
   );
 }
