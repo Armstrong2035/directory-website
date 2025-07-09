@@ -71,52 +71,46 @@ const Verification = () => {
     options = [],
     isOptional = false
   ) => {
-    const displayValue = formData[name] || "N/A";
+    const displayValue = formData[name] || "";
 
-    if (isEditing) {
-      if (type === "dropdown") {
-        return (
-          <FormControl fullWidth>
-            <InputLabel>{label}</InputLabel>
-            <Select
-              name={name}
-              value={formData[name]}
-              onChange={handleChange}
-              label={label}
-            >
-              <MenuItem value="">
-                <em>Select...</em>
-              </MenuItem>
-              {options.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        );
-      }
+    if (type === "dropdown") {
       return (
-        <TextField
-          type={type}
-          name={name}
-          label={label}
-          value={formData[name]}
-          onChange={handleChange}
-          fullWidth
-          helperText={isOptional ? "Optional" : ""}
-          InputLabelProps={{ shrink: true }} // 👈 this is key
-        />
+        <FormControl fullWidth>
+          <InputLabel>{label}</InputLabel>
+          <Select
+            name={name}
+            value={formData[name]}
+            onChange={handleChange}
+            label={label}
+            disabled={!isEditing}
+          >
+            <MenuItem value="">
+              <em>Select...</em>
+            </MenuItem>
+            {options.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       );
     }
 
     return (
-      <div>
-        <Typography variant="caption" color="textSecondary">
-          {label}
-        </Typography>
-        <Typography variant="body1">{displayValue}</Typography>
-      </div>
+      <TextField
+        type={type}
+        variant={"filled"}
+        name={name}
+        label={label}
+        value={displayValue}
+        onChange={handleChange}
+        fullWidth
+        disabled={!isEditing}
+        helperText={isOptional ? "Optional" : ""}
+        InputLabelProps={{ shrink: true }}
+        placeholder={!isEditing && !displayValue ? "N/A" : ""}
+      />
     );
   };
 
