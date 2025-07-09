@@ -36,7 +36,7 @@ export default function DashboardContent() {
       <Divider sx={{ my: 4 }} />
 
       <InventoryList />
-      <AddListingModal   open={isModalOpen} onClose={handleCloseModal} onSubmit={handleCreateListing} />
+      {/* <AddListingModal   open={isModalOpen} onClose={handleCloseModal} onSubmit={handleCreateListing} /> */}
     </Box>
   );
 }

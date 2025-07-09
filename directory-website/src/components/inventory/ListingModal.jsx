@@ -8,7 +8,6 @@ import AddListingModal from "./add-listing-modal";
 const ListingModal = ({}) => {
   const [inventoryModalOpen, setInventoryModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [loading, setLoading] = useState(true);
   const handleInventoryOpen = () => setInventoryModalOpen(true);
   const handleInventoryClose = () => setInventoryModalOpen(false);
   const handleAddInventoryListing = async (newListing) => {
@@ -63,7 +62,7 @@ const ListingModal = ({}) => {
           Add Inventory
         </Button>
       </Box>
-      <AddListingModal open={inventoryModalOpen} onClose={handleInventoryClose} onSubmit={handleAddInventoryListing} />
+      <AddListingModal open={inventoryModalOpen} onClose={handleInventoryClose} />
 
 
     </Box>

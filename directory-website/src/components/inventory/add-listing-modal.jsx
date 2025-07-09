@@ -16,7 +16,7 @@ import Typography from "@mui/material/Typography"
 import Grid from "@mui/material/Grid"
 import { styled } from "@mui/material/styles"
 import CameraAltIcon from "@mui/icons-material/CameraAlt"
-import { createListing } from "../../lib/listings"
+import { createListing, getListings } from "../../lib/listings"
 import { CircularProgress } from "@mui/material"
 import { useAuth } from "../../contexts/AuthContext"
 
@@ -48,9 +48,12 @@ export default function AddListingModal({ open, onClose }) {
     price: "",
     email: "",
     phoneNumber: "",
+    bath: "",
+    beds: "",
     listingType: "",
     description: "",
   })
+  
 
 
   const auth = useAuth();
@@ -60,11 +63,12 @@ export default function AddListingModal({ open, onClose }) {
   const fileInputRef = useRef(null)
 
   const handleInputChange = (field) => (event) => {
-    setFormData({
-      ...formData,
-      [field]: event.target.value,
-    })
-  }
+    const value = event.target.value;
+    setFormData((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const handleFileSelect = (event) => {
     const file = event.target.files?.[0]
@@ -98,8 +102,8 @@ export default function AddListingModal({ open, onClose }) {
 
       alert("Listing created successfully");
       
-      handleInventoryClose();
-      fetchAllListings(); // Refresh the listings
+      onClose();
+      getListings(user.uid) // Refresh the listings
     } catch (error) {
       console.error("Error in handleAddInventoryListing:", error);
       alert(`Error creating listing: ${error.message}`);
@@ -311,9 +315,8 @@ export default function AddListingModal({ open, onClose }) {
               <TextField
                 fullWidth
                 placeholder="Number of Bathrooms"
-                type="email"
                 value={formData.bath}
-                onChange={handleInputChange("email")}
+                onChange={handleInputChange("bath")}
                 size="small"
                 sx={{
                   "& .MuiOutlinedInput-root": {

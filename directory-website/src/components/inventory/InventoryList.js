@@ -2,7 +2,7 @@
 
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -19,58 +19,14 @@ import {
   Button,
   AppBar,
   Toolbar,
+  CircularProgress,
 } from "@mui/material";
 import { dashboardTypographyStyles } from "@/styles/typography";
 import Image from "next/image";
 import ListingModal from "./ListingModal";
+import { useAuth } from "../../contexts/AuthContext";
+import { getListings } from "../../lib/listings";
 
-const listings = [
-  {
-    name: "Azure Palms Residences",
-    image: "/images/azure-palms.png",
-    location: "Palm Oasis District",
-    beds: 3,
-    bath: 4,
-    price: "AED 348,295",
-    type: "Rent",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-];
 
 const ListingTypeChip = ({ type }) => {
   const color = type === "Rent" ? "#4379EE" : "#FCBE2D";
@@ -90,6 +46,61 @@ const ListingTypeChip = ({ type }) => {
 };
 
 export default function InventoryTable() {
+const [inventoryListings, setInventoryListings] = useState([])
+const [loading, setLoading] = useState(false)
+
+  const auth = useAuth();
+  const user = auth.user;
+
+
+console.log("User", user)
+
+  useEffect(() => {
+    setLoading(true);
+    if (user) {
+      const fetchAllListings = async () => {
+       
+        const { listings: allListings, error } = await getListings(user.uid); // No userId = get all listings
+    
+        console.log(" Listings", allListings)
+        if (error) {
+          console.error("Error fetching listings:", error);
+        } else {
+          setInventoryListings(allListings);
+        }
+    
+        setLoading(false);
+      };
+
+      fetchAllListings()
+    }
+  }, [user, ]);
+
+
+  if (loading) {
+    return (
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          bgcolor: "rgba(255,255,255,0.7)",
+          zIndex: 9999,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
+
+
+
   return (
     <Paper
       sx={{
@@ -142,20 +153,20 @@ export default function InventoryTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {listings.map((listing, index) => (
+              {inventoryListings.map((listing, index) => (
                 <TableRow key={index}>
                   <TableCell>
                     <Stack direction="row" spacing={2} alignItems="center">
                       <Avatar
                         src={listing.image}
-                        alt={listing.name}
+                        alt={listing.sellerName}
                         variant="rounded"
                         sx={{ width: 48, height: 48 }}
                       />
                       <Typography
                         sx={{ ...dashboardTypographyStyles.smallBold }}
                       >
-                        {listing.name}
+                        {listing.sellerName}
                       </Typography>
                     </Stack>
                   </TableCell>
@@ -188,7 +199,7 @@ export default function InventoryTable() {
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <ListingTypeChip type={listing.type} />
+                    <ListingTypeChip type={listing.listingType} />
                   </TableCell>
                 </TableRow>
               ))}
