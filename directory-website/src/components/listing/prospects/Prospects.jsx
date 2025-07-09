@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, Paper, Button, Chip } from "@mui/material";
+import { Box, Typography, Paper, Button, Chip, Grid } from "@mui/material";
 import { motion } from "framer-motion";
 
 const initialProspects = {
@@ -143,15 +143,27 @@ const Prospects = () => {
   ];
 
   return (
-    <Box sx={{ display: "flex", gap: 3, p: 3, overflowX: "auto" }}>
-      {statuses.map((status) => (
-        <KanbanColumn
-          key={status}
-          title={status}
-          prospects={prospectsByStatus[status]}
-          onDrop={handleDrop}
-        />
-      ))}
+    <Box
+      sx={{
+        display: "flex",
+        gap: 3,
+        p: 3,
+        height: "100%",
+        border: "1px solid red",
+      }}
+    >
+      <Grid container>
+        {statuses.map((status) => (
+          <Grid item size={{ lg: 3 }}>
+            <KanbanColumn
+              key={status}
+              title={status}
+              prospects={prospectsByStatus[status]}
+              onDrop={handleDrop}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 };

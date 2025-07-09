@@ -13,6 +13,7 @@ import {
   CircularProgress,
   Chip,
   Container,
+  LinearProgress,
 } from "@mui/material";
 
 const Verification = () => {
@@ -104,6 +105,7 @@ const Verification = () => {
           onChange={handleChange}
           fullWidth
           helperText={isOptional ? "Optional" : ""}
+          InputLabelProps={{ shrink: true }} // 👈 this is key
         />
       );
     }
@@ -130,59 +132,51 @@ const Verification = () => {
   ];
 
   return (
-    <Paper elevation={3} sx={{ p: 3 }}>
+    <Box sx={{ height: "100%", p: 3 }}>
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center",
           alignItems: "center",
           mb: 3,
         }}
       >
-        <Box sx={{ position: "relative", display: "inline-flex" }}>
-          <CircularProgress
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
+          <LinearProgress
             variant="determinate"
             value={verificationScore}
-            size={60}
+            sx={{ width: "100%", height: "8px", borderRadius: 2 }}
           />
-          <Box
-            sx={{
-              top: 0,
-              left: 0,
-              bottom: 0,
-              right: 0,
-              position: "absolute",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            textAlign={"center"}
           >
-            <Typography
-              variant="caption"
-              component="div"
-              color="text.secondary"
-            >
-              {`Verification ${verificationScore}% complete`}
-            </Typography>
-          </Box>
+            {` ${verificationScore}% complete`}
+          </Typography>
         </Box>
-        <Button variant="contained" onClick={toggleEdit}>
-          {isEditing ? "Save" : "Edit"}
-        </Button>
       </Box>
 
       <Grid container spacing={2}>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField("Name", "name")}
         </Grid>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField("Title Deed Number", "titleDeedNumber", "number")}
         </Grid>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField("Title Deed Issue Date", "titleDeedIssueDate", "date")}
         </Grid>
 
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField(
             "Property Type",
             "propertyType",
@@ -190,10 +184,10 @@ const Verification = () => {
             propertyTypeOptions
           )}
         </Grid>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField("Community", "community")}
         </Grid>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField(
             "Mortgage Status",
             "mortgageStatus",
@@ -201,17 +195,21 @@ const Verification = () => {
             mortgageStatusOptions
           )}
         </Grid>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField("Municipality Number", "municipalityNumber", "number")}
         </Grid>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField("Area (sqm)", "areaSqm", "number", [], true)}
         </Grid>
-        <Grid item size={{ xs: 12 }}>
+        <Grid item size={{ xs: 12, md: 6 }}>
           {renderField("Area (sqft)", "areaSqft", "number", [], true)}
         </Grid>
       </Grid>
-    </Paper>
+
+      <Button variant="contained" onClick={toggleEdit} sx={{ mt: 3 }}>
+        {isEditing ? "Save" : "Edit"}
+      </Button>
+    </Box>
   );
 };
 

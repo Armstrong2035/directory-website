@@ -23,54 +23,9 @@ import {
 import { dashboardTypographyStyles } from "@/styles/typography";
 import Image from "next/image";
 import ListingModal from "./ListingModal";
-
-const listings = [
-  {
-    name: "Azure Palms Residences",
-    image: "/images/azure-palms.png",
-    location: "Palm Oasis District",
-    beds: 3,
-    bath: 4,
-    price: "AED 348,295",
-    type: "Rent",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-  {
-    name: "Golden Dunes Villas",
-    image: "/images/golden-dunes.png",
-    location: "Emirates Bay",
-    beds: 3,
-    bath: 4,
-    price: "AED 534,295",
-    type: "Buy",
-  },
-];
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { listings } from "@/app/inventory/mock-data/listings";
 
 const ListingTypeChip = ({ type }) => {
   const color = type === "Rent" ? "#4379EE" : "#FCBE2D";
@@ -90,6 +45,10 @@ const ListingTypeChip = ({ type }) => {
 };
 
 export default function InventoryTable() {
+  const router = useRouter();
+  const navigateTo = (url) => {
+    router.push(`/inventory/${url}`);
+  };
   return (
     <Paper
       sx={{
@@ -143,7 +102,7 @@ export default function InventoryTable() {
             </TableHead>
             <TableBody>
               {listings.map((listing, index) => (
-                <TableRow key={index}>
+                <TableRow key={index} onClick={() => navigateTo(listing.id)}>
                   <TableCell>
                     <Stack direction="row" spacing={2} alignItems="center">
                       <Avatar

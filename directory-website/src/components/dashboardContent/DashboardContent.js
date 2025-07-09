@@ -10,8 +10,6 @@ export default function DashboardContent() {
   return (
     <Box
       sx={{
-        height: "100%",
-
         backgroundColor: "#F5F6FA",
         p: 10,
       }}
