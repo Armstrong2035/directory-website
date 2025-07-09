@@ -110,7 +110,6 @@ const ListingPage = () => {
 
   return (
     <DashboardLayout>
-      <Divider sx={{ mb: 3 }} />
       <Box
         sx={{
           mx: 10,
