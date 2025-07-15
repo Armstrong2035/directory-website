@@ -24,9 +24,9 @@ import {
 import { dashboardTypographyStyles } from "@/styles/typography";
 import Image from "next/image";
 import ListingModal from "./ListingModal";
-import { useAuth } from "../../contexts/AuthContext";
-import { getListings } from "../../lib/listings";
-
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { listings } from "@/app/inventory/mock-data/listings";
 
 const ListingTypeChip = ({ type }) => {
   const color = type === "Rent" ? "#4379EE" : "#FCBE2D";
@@ -46,61 +46,10 @@ const ListingTypeChip = ({ type }) => {
 };
 
 export default function InventoryTable() {
-const [inventoryListings, setInventoryListings] = useState([])
-const [loading, setLoading] = useState(false)
-
-  const auth = useAuth();
-  const user = auth.user;
-
-
-console.log("User", user)
-
-  useEffect(() => {
-    setLoading(true);
-    if (user) {
-      const fetchAllListings = async () => {
-       
-        const { listings: allListings, error } = await getListings(user.uid); // No userId = get all listings
-    
-        console.log(" Listings", allListings)
-        if (error) {
-          console.error("Error fetching listings:", error);
-        } else {
-          setInventoryListings(allListings);
-        }
-    
-        setLoading(false);
-      };
-
-      fetchAllListings()
-    }
-  }, [user, ]);
-
-
-  if (loading) {
-    return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          bgcolor: "rgba(255,255,255,0.7)",
-          zIndex: 9999,
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-        }}
-      >
-        <CircularProgress size={60} />
-      </Box>
-    );
-  }
-
-
-
+  const router = useRouter();
+  const navigateTo = (url) => {
+    router.push(`/inventory/${url}`);
+  };
   return (
     <Paper
       sx={{
@@ -153,8 +102,8 @@ console.log("User", user)
               </TableRow>
             </TableHead>
             <TableBody>
-              {inventoryListings.map((listing, index) => (
-                <TableRow key={index}>
+              {listings.map((listing, index) => (
+                <TableRow key={index} onClick={() => navigateTo(listing.id)}>
                   <TableCell>
                     <Stack direction="row" spacing={2} alignItems="center">
                       <Avatar

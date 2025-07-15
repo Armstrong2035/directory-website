@@ -1,6 +1,18 @@
 import React, { useState } from "react";
-import { Box, Typography, Paper, Button, Chip } from "@mui/material";
-import { motion } from "framer-motion";
+import {
+  Box,
+  Typography,
+  Paper,
+  Button,
+  Chip,
+  Grid,
+  Stack,
+  Icon,
+} from "@mui/material";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { KanbanColumn } from "./KanbanColumn";
+import SwipeIcon from "@mui/icons-material/Swipe";
+import { dashboardTypographyStyles } from "@/styles/typography";
 
 const initialProspects = {
   "Lead In": [
@@ -8,12 +20,14 @@ const initialProspects = {
       id: "1",
       name: "John Doe",
       email: "john.doe@example.com",
+      phone: "555-123-4567",
       status: "Lead In",
     },
     {
       id: "2",
       name: "Jane Smith",
       email: "jane.smith@example.com",
+      phone: "555-987-6543",
       status: "Lead In",
     },
   ],
@@ -22,6 +36,7 @@ const initialProspects = {
       id: "3",
       name: "Peter Jones",
       email: "peter.jones@example.com",
+      phone: "555-555-1212",
       status: "Contacted",
     },
   ],
@@ -31,71 +46,11 @@ const initialProspects = {
       id: "4",
       name: "Alice Brown",
       email: "alice.brown@example.com",
+      phone: "555-222-3333",
       status: "Interested",
     },
   ],
   "Offer Made": [],
-};
-
-const KanbanColumn = ({ title, prospects, onDrop }) => {
-  const handleDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const prospectId = e.dataTransfer.getData("prospectId");
-    onDrop(prospectId, title);
-  };
-
-  return (
-    <Paper
-      sx={{
-        minWidth: 280,
-        width: "100%",
-        p: 2,
-        backgroundColor: "#f4f5f7",
-        borderRadius: 2,
-        display: "flex",
-        flexDirection: "column",
-        maxHeight: "80vh",
-        overflowY: "auto",
-      }}
-      onDragOver={handleDragOver}
-      onDrop={handleDrop}
-    >
-      <Typography variant="h6" sx={{ mb: 2, fontWeight: "bold" }}>
-        {title} ({prospects.length})
-      </Typography>
-      <Box sx={{ flexGrow: 1 }}>
-        {prospects.map((prospect) => (
-          <motion.div
-            key={prospect.id}
-            draggable
-            onDragStart={(e) =>
-              e.dataTransfer.setData("prospectId", prospect.id)
-            }
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            style={{ cursor: "grab" }}
-          >
-            <Paper sx={{ p: 1.5, mb: 1.5, borderRadius: 1, boxShadow: 1 }}>
-              <Typography variant="subtitle1" fontWeight="medium">
-                {prospect.name}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {prospect.email}
-              </Typography>
-              <Chip label={prospect.status} size="small" sx={{ mt: 1 }} />
-            </Paper>
-          </motion.div>
-        ))}
-      </Box>
-      <Button variant="outlined" sx={{ mt: 2 }}>
-        Add Prospect
-      </Button>
-    </Paper>
-  );
 };
 
 const Prospects = () => {
@@ -136,22 +91,64 @@ const Prospects = () => {
   };
 
   const statuses = [
-    "Contacted",
-    "Viewing Scheduled",
-    "Interested",
-    "Offer Made",
+    { title: "Contacted", primaryColor: "#F2FFE5", secondaryColor: "#ffffff" },
+    {
+      title: "Viewing Scheduled",
+      primaryColor: "#D6ECF0",
+      secondaryColor: "#E9FAFD",
+    },
+    { title: "Interested", primaryColor: "#D8EDFF", secondaryColor: "#EFF7FF" },
+    { title: "Offer Made", primaryColor: "#B2EAB2", secondaryColor: "#CEF2D7" },
   ];
 
   return (
-    <Box sx={{ display: "flex", gap: 3, p: 3, overflowX: "auto" }}>
-      {statuses.map((status) => (
-        <KanbanColumn
-          key={status}
-          title={status}
-          prospects={prospectsByStatus[status]}
-          onDrop={handleDrop}
-        />
-      ))}
+    <Box
+      sx={{
+        display: "flex",
+        gap: 3,
+        py: 3,
+        flexDirection: "column",
+      }}
+    >
+      <Stack
+        direction={"row"}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+      >
+        <Typography
+          sx={{ ...dashboardTypographyStyles.mediumSemiBold, fontSize: "30px" }}
+        >
+          Manage your leads
+        </Typography>
+
+        <Button
+          variant="text"
+          startIcon={<AddCircleIcon sx={{ color: "#3FB65B" }} />}
+          sx={{
+            color: "black",
+            textTransform: "none", // 👈 disables default uppercase
+          }}
+        >
+          Add Contact
+        </Button>
+      </Stack>
+      <Grid container spacing={2} justifyContent={"center"}>
+        {statuses.map((status, index) => (
+          <Grid item size={{ lg: 3 }} key={index}>
+            <KanbanColumn
+              key={status.title}
+              status={status}
+              prospects={prospectsByStatus[status.title]}
+              onDrop={handleDrop}
+            />
+          </Grid>
+        ))}
+      </Grid>
+
+      <Stack alignSelf={"center"} alignItems={"center"} sx={{}}>
+        <SwipeIcon fontSize="large" sx={{ color: "#979797" }} />
+        <Typography>Slide contact card to sort</Typography>
+      </Stack>
     </Box>
   );
 };

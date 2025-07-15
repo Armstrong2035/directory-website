@@ -53,6 +53,13 @@ export const dashboardTypographyStyles = {
     fontSize: "80px",
     letterSpacing: "1px",
   },
+  largeSemiBold: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 600,
+    fontSize: "40px",
+    letterSpacing: "0px",
+    lineHeight: "22px",
+  },
 
   tinyLight: {
     fontFamily: "'Nunito Sans', sans-serif",
@@ -72,6 +79,13 @@ export const dashboardTypographyStyles = {
     fontFamily: "'Nunito Sans', sans-serif",
     fontWeight: 600,
     fontSize: "16px",
+    letterSpacing: "0px",
+  },
+
+  smallSemiBold: {
+    fontFamily: "'Nunito Sans', sans-serif",
+    fontWeight: 600,
+    fontSize: "14px",
     letterSpacing: "0px",
   },
 
