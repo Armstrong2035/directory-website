@@ -1,0 +1,181 @@
+"use client"
+
+import { Box, Container, Typography, Button, useTheme, useMediaQuery } from "@mui/material"
+import Image from "next/image"
+import FloatingElements from "./FloatingElements"
+
+export default function HeroSection() {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"))
+  const isTablet = useMediaQuery(theme.breakpoints.down("lg"))
+
+  return (
+    <Box
+      sx={{
+        background: "linear-gradient(135deg, #90EE90 0%, #32CD32 50%, #228B22 100%)",
+        minHeight: "calc(100vh - 80px)",
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      {/* Background Building Image */}
+      <Box
+        sx={{
+          position: "absolute",
+          right: isMobile ? "-20%" : isTablet ? "-10%" : "0%",
+          top: "50%",
+          transform: "translateY(-50%)",
+          opacity: 0.3,
+          zIndex: 1,
+          width: isMobile ? "120%" : isTablet ? "80%" : "60%",
+          height: "auto",
+        }}
+      >
+        <Image
+          src="/images/building.png"
+          alt="Modern Building"
+          width={800}
+          height={600}
+          style={{
+            width: "100%",
+            height: "auto",
+            objectFit: "contain",
+          }}
+        />
+      </Box>
+
+      <Container maxWidth="xl" sx={{ position: "relative", zIndex: 2, py: { xs: 4, md: 6 } }}>
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
+            gap: isMobile ? 4 : 8,
+            alignItems: "center",
+            minHeight: { xs: "70vh", md: "80vh" },
+          }}
+        >
+          {/* Left Content */}
+          <Box
+            sx={{
+              order: isMobile ? 2 : 1,
+              pr: isMobile ? 0 : 4,
+            }}
+          >
+            <Typography
+              variant="h1"
+              sx={{
+                fontSize: isMobile ? "2.5rem" : isTablet ? "3.5rem" : "4.5rem",
+                fontWeight: 900,
+                color: "#2D5016",
+                lineHeight: 1.1,
+                mb: 3,
+                fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+              }}
+            >
+              Where Landlords Meet Sellers.
+            </Typography>
+
+            <Box sx={{ mb: 4 }}>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontSize: isMobile ? "1.1rem" : "1.3rem",
+                  fontWeight: 700,
+                  color: "#2D5016",
+                  mb: 1,
+                }}
+              >
+                Backed by Trust.
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontSize: isMobile ? "1.1rem" : "1.3rem",
+                  fontWeight: 700,
+                  color: "#2D5016",
+                  mb: 3,
+                }}
+              >
+                Powered by Intelligence.
+              </Typography>
+            </Box>
+
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: isMobile ? "1rem" : "1.1rem",
+                color: "#2D5016",
+                mb: 4,
+                lineHeight: 1.6,
+                maxWidth: "500px",
+              }}
+            >
+              A secure, data-driven platform that connects landlords, sellers, and brokers — transparently and
+              efficiently.
+            </Typography>
+
+            <Button
+              variant="contained"
+              sx={{
+                backgroundColor: "#FFFFFF",
+                color: "#2D5016",
+                fontSize: isMobile ? "1rem" : "1.1rem",
+                fontWeight: 600,
+                px: 4,
+                py: 1.5,
+                borderRadius: "50px",
+                textTransform: "none",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                "&:hover": {
+                  backgroundColor: "#F5F5F5",
+                  boxShadow: "0 6px 25px rgba(0,0,0,0.15)",
+                },
+              }}
+            >
+              CTA
+            </Button>
+          </Box>
+
+          {/* Right Content */}
+          <Box
+            sx={{
+              order: isMobile ? 1 : 2,
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minHeight: isMobile ? "400px" : "600px",
+            }}
+          >
+            {/* Main Characters Image */}
+            <Box
+              sx={{
+                position: "relative",
+                zIndex: 3,
+                width: isMobile ? "280px" : isTablet ? "350px" : "400px",
+                height: "auto",
+              }}
+            >
+              <Image
+                src="/images/characters.png"
+                alt="Professional Meeting"
+                width={400}
+                height={300}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+              />
+            </Box>
+
+            {/* Floating Elements */}
+            <FloatingElements isMobile={isMobile} isTablet={isTablet} />
+          </Box>
+        </Box>
+      </Container>
+    </Box>
+  )
+}
