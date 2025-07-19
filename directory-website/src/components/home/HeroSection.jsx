@@ -3,6 +3,7 @@
 import { Box, Container, Typography, Button, useTheme, useMediaQuery } from "@mui/material"
 import Image from "next/image"
 import FloatingElements from "./FloatingElements"
+import { dashboardTypographyStyles } from "../../styles/typography"
 
 export default function HeroSection() {
   const theme = useTheme()
@@ -12,7 +13,7 @@ export default function HeroSection() {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #90EE90 0%, #32CD32 50%, #228B22 100%)",
+        background: "#B0E57F",
         minHeight: "calc(100vh - 80px)",
         position: "relative",
         overflow: "hidden",
@@ -27,7 +28,7 @@ export default function HeroSection() {
           right: isMobile ? "-20%" : isTablet ? "-10%" : "0%",
           top: "50%",
           transform: "translateY(-50%)",
-          opacity: 0.3,
+          opacity: 0.7,
           zIndex: 1,
           width: isMobile ? "120%" : isTablet ? "80%" : "60%",
           height: "auto",
@@ -67,11 +68,12 @@ export default function HeroSection() {
               variant="h1"
               sx={{
                 fontSize: isMobile ? "2.5rem" : isTablet ? "3.5rem" : "4.5rem",
-                fontWeight: 900,
-                color: "#2D5016",
+                
+                color: "#1D3108",
                 lineHeight: 1.1,
                 mb: 3,
-                fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+                ...dashboardTypographyStyles.extraLargeBold,
+                fontWeight: 900,
               }}
             >
               Where Landlords Meet Sellers.
@@ -154,19 +156,20 @@ export default function HeroSection() {
               sx={{
                 position: "relative",
                 zIndex: 3,
-                width: isMobile ? "280px" : isTablet ? "350px" : "400px",
+                width: isMobile ? "280px" : isTablet ? "550px" : "700px",
                 height: "auto",
               }}
             >
               <Image
                 src="/images/characters.png"
                 alt="Professional Meeting"
-                width={400}
+                width={600}
                 height={300}
                 style={{
                   width: "100%",
                   height: "auto",
                   objectFit: "contain",
+                  bottom: 0
                 }}
               />
             </Box>

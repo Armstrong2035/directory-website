@@ -6,6 +6,10 @@ import Navbar from "../../components/home/Navbar"
 import { Box } from "@mui/material"
 import HowItWorksSection from "../../components/home/HowItWorksSection"
 import ChooseTrackSection from "../../components/home/ChooseTrackSection"
+import BuiltOnVerifiedData from "../../components/home/BuiltOnSection"
+import TrustPrivacySection from "../../components/home/TrustPrivacySection"
+import ReadyToJoinSection from "../../components/home/ReadyToJoinSection"
+import Footer from "../../components/home/Footer"
 
 const theme = createTheme({
   typography: {
@@ -26,12 +30,16 @@ export default function Home() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ backgroundColor: "linear-gradient(135deg, #90EE90 0%, #32CD32 50%, #228B22 100%)" }}>
+      <Box sx={{ backgroundColor: "#B0E57F" }}>
         <Navbar />
         <HeroSection />
       </Box>
       <HowItWorksSection />
       <ChooseTrackSection />
+      <BuiltOnVerifiedData />
+      <TrustPrivacySection />
+      <ReadyToJoinSection />
+      <Footer />
     </ThemeProvider>
   )
 }

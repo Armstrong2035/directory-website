@@ -24,7 +24,7 @@ export default function Navbar() {
       position="static"
       elevation={0}
       sx={{
-        backgroundColor: "transparent",
+        backgroundColor: "#B0E57F",
         boxShadow: "none",
       }}
     >

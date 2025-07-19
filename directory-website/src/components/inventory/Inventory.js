@@ -1,7 +1,6 @@
-import DashboardLayout from "@/app/dashboardLayout/layout";
+
 import InventoryTable from "./InventoryList";
 import DashboardFilters from "../dashboardContent/dashboardControls/DashboardFilters";
-import ListingModal from "./ListingModal";
 import { Divider, Box } from "@mui/material";
 import { useState } from "react";
 
