@@ -29,8 +29,8 @@ const theme = createTheme({
 export default function Home() {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box sx={{ backgroundColor: "#B0E57F" }}>
+     
+      <Box sx={{ backgroundColor: "#B0E57F", paddingTop: 0 }}>
         <Navbar />
         <HeroSection />
       </Box>

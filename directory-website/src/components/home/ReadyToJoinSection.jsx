@@ -9,7 +9,7 @@ export default function ReadyToJoinSection() {
   return (
     <Box
       sx={{
-        background: "linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%)",
+        backgroundColor: "#52A230",
         py: { xs: 8, md: 12 },
         position: "relative",
         overflow: "hidden",
@@ -42,7 +42,7 @@ export default function ReadyToJoinSection() {
         {/* Content Card */}
         <Box
           sx={{
-            backgroundColor: "rgba(144, 238, 144, 0.9)",
+            backgroundColor: "#B0E57F",
             borderRadius: "40px",
             p: { xs: 4, md: 8 },
             textAlign: "center",

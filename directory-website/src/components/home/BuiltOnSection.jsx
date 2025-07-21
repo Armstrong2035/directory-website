@@ -11,7 +11,7 @@ export default function BuiltOnVerifiedData ()  {
       sx={{
         height: 800,
         py: 8,
-        px: { xs: 3, sm: 5, md: 8, lg: 10 },
+        px: { xs: 3, sm: 5, md: 8, lg: 20 },
         backgroundColor: '#B0E57F',
         position: "relative"
       }}
@@ -82,25 +82,27 @@ export default function BuiltOnVerifiedData ()  {
           
           <Box sx={{ height: '1px', width: '100%', backgroundColor: '#e0e0e0', mb: 4 }} />
           
+
           <Button
-            variant="contained"
-            size="large"
-            sx={{
-              backgroundColor: '#000000',
-              color: '#ffffff',
-              borderRadius: '4px',
-              px: 4,
-              py: 1.5,
-              fontSize: '1rem',
-              fontWeight: 600,
-              textTransform: 'none',
-              '&:hover': {
-                backgroundColor: '#333333',
-              }
-            }}
-          >
-            Sign Up
-          </Button>
+              variant="contained"
+              sx={{
+                backgroundColor: "#FFFFFF",
+                color: "#2D5016",
+                fontSize: "1.1rem",
+                fontWeight: 600,
+                px: 4,
+                py: 1.5,
+                borderRadius: "50px",
+                textTransform: "none",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                "&:hover": {
+                  backgroundColor: "#F5F5F5",
+                  boxShadow: "0 6px 25px rgba(0,0,0,0.15)",
+                },
+              }}
+            >
+             Sign Up
+            </Button>
         </Grid>
         
         {isMdUp && (

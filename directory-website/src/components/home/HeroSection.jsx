@@ -14,24 +14,26 @@ export default function HeroSection() {
     <Box
       sx={{
         background: "#B0E57F",
-        minHeight: "calc(100vh - 80px)",
+        minHeight: "80vh",
         position: "relative",
         overflow: "hidden",
         display: "flex",
         alignItems: "center",
+        paddingTop: 0
       }}
     >
       {/* Background Building Image */}
       <Box
         sx={{
           position: "absolute",
-          right: isMobile ? "-20%" : isTablet ? "-10%" : "0%",
-          top: "50%",
-          transform: "translateY(-50%)",
-          opacity: 0.7,
+          right: isMobile ? "-20%" : isTablet ? "0%" : "0%",
+         bottom: 0,
+         
+          opacity: 0.8,
           zIndex: 1,
           width: isMobile ? "120%" : isTablet ? "80%" : "60%",
           height: "auto",
+          
         }}
       >
         <Image
@@ -47,14 +49,15 @@ export default function HeroSection() {
         />
       </Box>
 
-      <Container maxWidth="xl" sx={{ position: "relative", zIndex: 2, py: { xs: 4, md: 6 } }}>
+    
         <Box
           sx={{
             display: "grid",
             gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr",
             gap: isMobile ? 4 : 8,
-            alignItems: "center",
-            minHeight: { xs: "70vh", md: "80vh" },
+            
+            minHeight: { xs: "100vh", md: "100vh" },
+            
           }}
         >
           {/* Left Content */}
@@ -62,6 +65,8 @@ export default function HeroSection() {
             sx={{
               order: isMobile ? 2 : 1,
               pr: isMobile ? 0 : 4,
+              paddingTop: 28,
+              paddingLeft: 20
             }}
           >
             <Typography
@@ -144,20 +149,22 @@ export default function HeroSection() {
           <Box
             sx={{
               order: isMobile ? 1 : 2,
-              position: "relative",
+              posi3tion: "relative",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               minHeight: isMobile ? "400px" : "600px",
+              height: "100%"
             }}
           >
             {/* Main Characters Image */}
             <Box
               sx={{
-                position: "relative",
+                position: "absolute",
                 zIndex: 3,
                 width: isMobile ? "280px" : isTablet ? "550px" : "700px",
                 height: "auto",
+                bottom: 0
               }}
             >
               <Image
@@ -173,12 +180,36 @@ export default function HeroSection() {
                 }}
               />
             </Box>
+            <Box
+        sx={{
+          position: "absolute",
+          bottom: "200px",
+          right: isMobile ? "15%" : "15%",
+        
+          width: isMobile ? 60 : 100,
+          height: isMobile ? 60 : 100,
+          zIndex: 4,
+        }}
+      >
+        <Image
+          src="/images/house-icon.png"
+          alt="House Icon"
+          width={100}
+          height={100}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            filter: "drop-shadow(0 4px 20px rgba(0, 255, 0, 0.4))",
+          }}
+        />
+      </Box>
 
             {/* Floating Elements */}
             <FloatingElements isMobile={isMobile} isTablet={isTablet} />
           </Box>
         </Box>
-      </Container>
+     
     </Box>
   )
 }

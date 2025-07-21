@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material"
 import Image from "next/image"
 
 export default function FloatingElements({ isMobile, isTablet }) {
-  const elementSize = isMobile ? 80 : isTablet ? 100 : 120
+  const elementSize = isMobile ? 80 : isTablet ? 100 : 150
   const fontSize = isMobile ? "0.9rem" : "1.1rem"
 
   return (
@@ -12,7 +12,7 @@ export default function FloatingElements({ isMobile, isTablet }) {
         sx={{
           position: "absolute",
           top: isMobile ? "10%" : "15%",
-          left: isMobile ? "10%" : "20%",
+          right: isMobile ? "10%" : "20%",
           width: elementSize,
           height: elementSize,
           backgroundColor: "#FCE97E",
@@ -68,37 +68,14 @@ export default function FloatingElements({ isMobile, isTablet }) {
       </Box>
 
       {/* House Icon - Center Right */}
-      <Box
-        sx={{
-          position: "absolute",
-          top: "50%",
-          right: isMobile ? "15%" : "25%",
-          transform: "translateY(-50%)",
-          width: isMobile ? 60 : 80,
-          height: isMobile ? 60 : 80,
-          zIndex: 4,
-        }}
-      >
-        <Image
-          src="/images/house-icon.png"
-          alt="House Icon"
-          width={80}
-          height={80}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "contain",
-            filter: "drop-shadow(0 4px 20px rgba(0, 255, 0, 0.4))",
-          }}
-        />
-      </Box>
+
 
       {/* Secure Circle - Bottom */}
       <Box
         sx={{
           position: "absolute",
-          bottom: isMobile ? "15%" : "20%",
-          left: isMobile ? "20%" : "30%",
+          bottom: isMobile ? "15%" : "0%",
+          right: isMobile ? "20%" : "18%",
           width: elementSize,
           height: elementSize,
           backgroundColor: "#FFFFFF",
@@ -106,7 +83,7 @@ export default function FloatingElements({ isMobile, isTablet }) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          zIndex: 2,
+          zIndex: 3,
           boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
         }}
       >

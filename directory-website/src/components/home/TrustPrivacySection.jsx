@@ -11,7 +11,7 @@ export default function TrustPrivacySection() {
     <Box
       sx={{
         backgroundColor: "#F5F5DC",
-        py: { xs: 6, md: 8 },
+        py: { xs: 6, md: 20 },
         position: "relative",
       }}
     >
@@ -19,9 +19,9 @@ export default function TrustPrivacySection() {
         {/* Content Card */}
         <Box
           sx={{
-            backgroundColor: "#B8E6B8",
+            backgroundColor: "#B0E57F",
             borderRadius: "40px",
-            p: { xs: 4, md: 6, lg: 8 },
+            p: { xs: 4, md: 6, lg: 14 },
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
             alignItems: "center",
@@ -46,7 +46,7 @@ export default function TrustPrivacySection() {
               }}
             >
               <Image
-                src="/images/trusted-badge.png"
+                src="/images/trusted.png"
                 alt="Trusted Badge with 5 Stars"
                 fill
                 style={{
@@ -59,8 +59,8 @@ export default function TrustPrivacySection() {
           {/* Right Side - Content */}
           <Box
             sx={{
-              flex: 1,
-              textAlign: isMobile ? "center" : "left",
+              
+              textAlign:  "right",
             }}
           >
             {/* Main Heading */}
@@ -71,7 +71,7 @@ export default function TrustPrivacySection() {
                 fontWeight: 700,
                 color: "#2D5016",
                 mb: { xs: 3, md: 4 },
-                fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+               
                 lineHeight: 1.1,
               }}
             >
@@ -89,7 +89,9 @@ export default function TrustPrivacySection() {
                 fontSize: { xs: "1rem", md: "1.1rem", lg: "1.2rem" },
                 color: "#2D5016",
                 lineHeight: 1.6,
-                maxWidth: { xs: "100%", md: "500px", lg: "600px" },
+                
+                textWrap: "wrap",
+                textAlign: "right"
               }}
             >
               We protect your data with military-grade encryption, platform access controls, and signed NDAs. Your
