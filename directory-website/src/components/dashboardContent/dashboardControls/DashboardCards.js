@@ -51,7 +51,7 @@ export default function DashboardCards() {
                 borderRadius: "50%",
               }}
             >
-              <Image src={card.icon} height={35} width={35} />
+              <Image src={card.icon} height={35} width={35} alt="card-img" />
             </Box>
           </Stack>
         </Card>

@@ -2,7 +2,7 @@
 
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -19,6 +19,7 @@ import {
   Button,
   AppBar,
   Toolbar,
+  CircularProgress,
 } from "@mui/material";
 import { dashboardTypographyStyles } from "@/styles/typography";
 import Image from "next/image";
@@ -107,14 +108,14 @@ export default function InventoryTable() {
                     <Stack direction="row" spacing={2} alignItems="center">
                       <Avatar
                         src={listing.image}
-                        alt={listing.name}
+                        alt={listing.sellerName}
                         variant="rounded"
                         sx={{ width: 48, height: 48 }}
                       />
                       <Typography
                         sx={{ ...dashboardTypographyStyles.smallBold }}
                       >
-                        {listing.name}
+                        {listing.sellerName}
                       </Typography>
                     </Stack>
                   </TableCell>
@@ -147,7 +148,7 @@ export default function InventoryTable() {
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <ListingTypeChip type={listing.type} />
+                    <ListingTypeChip type={listing.listingType} />
                   </TableCell>
                 </TableRow>
               ))}
