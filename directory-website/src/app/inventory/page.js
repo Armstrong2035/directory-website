@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 // import InventoryGrid from "@/components/inventory/InventoryGrid";
 // import ListingModal from "@/components/inventory/ListingModal";
 import DashboardLayout from "../dashboardLayout/layout";
-import Inventory from "@/components/inventory/Inventory";
+import Inventory from "../../components/inventory/Inventory";
 export default function Page() {
   const [open, setOpen] = useState(false);
   const [listings, setListings] = useState([]);

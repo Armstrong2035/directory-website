@@ -80,7 +80,7 @@ export default function ResponsiveAppBar() {
               fontWeight: 900,
             }}
           >
-            Subarashi Scout
+            Rashii
           </Typography>
         </Link>
 
@@ -93,7 +93,8 @@ export default function ResponsiveAppBar() {
                   variant="contained"
                   onClick={handleDashboard}
                   sx={{
-                    background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
+                    background:
+                      "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
                     color: "#19212b",
                     fontWeight: 700,
                     px: 3,
@@ -101,8 +102,9 @@ export default function ResponsiveAppBar() {
                     borderRadius: 2,
                     textTransform: "none",
                     boxShadow: "none",
-                    '&:hover': {
-                      background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
+                    "&:hover": {
+                      background:
+                        "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
                       opacity: 0.9,
                     },
                   }}
@@ -136,7 +138,8 @@ export default function ResponsiveAppBar() {
                   variant="contained"
                   onClick={handleSignUp}
                   sx={{
-                    background: "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
+                    background:
+                      "linear-gradient(90deg, #4f8cff 0%, #ffb86b 100%)",
                     color: "#19212b",
                     fontWeight: 700,
                     px: 3,

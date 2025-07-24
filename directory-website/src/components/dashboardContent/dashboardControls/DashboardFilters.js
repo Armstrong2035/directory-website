@@ -28,7 +28,7 @@ const FilterSelect = ({ label, value, onChange, options = [] }) => {
         value={value}
         onChange={onChange}
         displayEmpty
-        sx={{ minWidth: 120, ...dashboardTypographyStyles.smallBoldTight }}
+        sx={{ ...dashboardTypographyStyles.smallBoldTight }}
       >
         <MenuItem
           disabled

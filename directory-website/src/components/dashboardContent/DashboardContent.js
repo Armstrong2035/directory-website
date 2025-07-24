@@ -12,7 +12,7 @@ export default function DashboardContent() {
     <Box
       sx={{
         backgroundColor: "#F5F6FA",
-        p: 10,
+        p: { md: 10, xs: 2 },
       }}
     >
       <Box>
